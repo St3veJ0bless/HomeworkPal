@@ -209,6 +209,12 @@ function settingsView(){
   return `<div class="card"><div class="mut">Angemeldet als</div><div><b>${esc((PROFILE&&PROFILE.name)||'')}</b> ${esc(U.email)}</div>
   <label>Akzentfarbe</label><div class="sw" id="sacc">${COL.map(c=>`<i data-k="${c}" class="${c===SET.accent?'on':''}" style="background:${c}"></i>`).join('')}<input type="color" id="saccx" value="${SET.accent}"></div>
   <label>Design</label><div class="seg" id="sth">${[['light','sun','Hell'],['dark','moon','Dunkel'],['auto','auto','Auto']].map(o=>`<button class="ic ${SET.theme===o[0]?'on':''}" data-th="${o[0]}">${I(o[1],18)} ${o[2]}</button>`).join('')}</div></div>
+  <div class="card"><b>Passwort ändern</b>
+  <label>Aktuelles Passwort</label><input type="password" id="pw0" autocomplete="current-password">
+  <label>Neues Passwort (mind. 8 Zeichen)</label><input type="password" id="pw1" autocomplete="new-password">
+  <label>Neues Passwort wiederholen</label><input type="password" id="pw2" autocomplete="new-password">
+  <button class="p ic" id="pwsave" style="width:100%;margin-top:14px">${I('key',18)} Passwort speichern</button>
+  <div class="mut" id="pwmsg" style="margin-top:10px"></div></div>
   <div class="card"><button class="ic" id="logout" style="width:100%">${I('logout',18)} Abmelden</button></div>`;
 }
 
@@ -258,6 +264,22 @@ function bind(){
     q('#sth button',b=>b.onclick=()=>{SET.theme=b.dataset.th;saveSet();render()});
     q('#sacc i',i=>i.onclick=()=>{SET.accent=i.dataset.k;saveSet();render()});
     $('saccx').onchange=e=>{SET.accent=e.target.value;saveSet();render()};
+    $('pwsave').onclick=async e=>{
+      const btn=e.currentTarget,msg=$('pwmsg'),p0=$('pw0').value,p1=$('pw1').value,p2=$('pw2').value;
+      const bad=t=>{msg.style.color='#e5484d';msg.textContent=t};
+      if(!p0)return bad('Bitte dein aktuelles Passwort eingeben.');
+      if(p1.length<8)return bad('Das neue Passwort braucht mindestens 8 Zeichen.');
+      if(p1!==p2)return bad('Die beiden neuen Passwörter stimmen nicht überein.');
+      if(p1===p0)return bad('Das neue Passwort muss anders sein als das alte.');
+      btn.disabled=true;msg.style.color='';msg.textContent='Speichere …';
+      const chk=await sb.auth.signInWithPassword({email:U.email,password:p0});
+      if(chk.error){btn.disabled=false;return bad('Das aktuelle Passwort stimmt nicht.')}
+      const {error}=await sb.auth.updateUser({password:p1});
+      btn.disabled=false;
+      if(error)return bad('Das hat nicht geklappt: '+error.message);
+      ['pw0','pw1','pw2'].forEach(i=>$(i).value='');
+      msg.style.color='#30a46c';msg.textContent='Passwort geändert.';toast('Passwort geändert');
+    };
     $('logout').onclick=async()=>{await sb.auth.signOut();U=null;PROFILE=null;TASKS=[];USERS=null;tab='home';render()};
   }
   if(tab==='admin'){

@@ -108,7 +108,7 @@ const TODAY=iso(new Date());
 
 /* ---------- Zustand ---------- */
 let sb=null,U=null,PROFILE=null,TASKS=[],USERS=null;
-let tab='home',prev='home',sel=TODAY,cv='week';
+let tab='home',prev='home',sel=TODAY,cv='week',pwOpen=false;
 const LS='lernplaner-set';
 let SET={accent:'#3b5bdb',theme:'auto'};
 try{Object.assign(SET,JSON.parse(localStorage.getItem(LS)||'{}'))}catch(e){}
@@ -209,12 +209,13 @@ function settingsView(){
   return `<div class="card"><div class="mut">Angemeldet als</div><div><b>${esc((PROFILE&&PROFILE.name)||'')}</b> ${esc(U.email)}</div>
   <label>Akzentfarbe</label><div class="sw" id="sacc">${COL.map(c=>`<i data-k="${c}" class="${c===SET.accent?'on':''}" style="background:${c}"></i>`).join('')}<input type="color" id="saccx" value="${SET.accent}"></div>
   <label>Design</label><div class="seg" id="sth">${[['light','sun','Hell'],['dark','moon','Dunkel'],['auto','auto','Auto']].map(o=>`<button class="ic ${SET.theme===o[0]?'on':''}" data-th="${o[0]}">${I(o[1],18)} ${o[2]}</button>`).join('')}</div></div>
-  <div class="card"><b>Passwort ändern</b>
+  <div class="card">${pwOpen?`<div class="row" style="justify-content:space-between"><b>Passwort ändern</b><button class="ib sm" id="pwx" aria-label="Schliessen">${I('x',16)}</button></div>
   <label>Aktuelles Passwort</label><input type="password" id="pw0" autocomplete="current-password">
   <label>Neues Passwort (mind. 8 Zeichen)</label><input type="password" id="pw1" autocomplete="new-password">
   <label>Neues Passwort wiederholen</label><input type="password" id="pw2" autocomplete="new-password">
   <button class="p ic" id="pwsave" style="width:100%;margin-top:14px">${I('key',18)} Passwort speichern</button>
-  <div class="mut" id="pwmsg" style="margin-top:10px"></div></div>
+  <div class="mut" id="pwmsg" style="margin-top:10px"></div>`
+  :`<button class="ic" id="pwopen" style="width:100%">${I('key',18)} Passwort ändern</button>`}</div>
   <div class="card"><button class="ic" id="logout" style="width:100%">${I('logout',18)} Abmelden</button></div>`;
 }
 
@@ -264,7 +265,9 @@ function bind(){
     q('#sth button',b=>b.onclick=()=>{SET.theme=b.dataset.th;saveSet();render()});
     q('#sacc i',i=>i.onclick=()=>{SET.accent=i.dataset.k;saveSet();render()});
     $('saccx').onchange=e=>{SET.accent=e.target.value;saveSet();render()};
-    $('pwsave').onclick=async e=>{
+    if($('pwopen'))$('pwopen').onclick=()=>{pwOpen=true;render();$('pw0').focus()};
+    if($('pwx'))$('pwx').onclick=()=>{pwOpen=false;render()};
+    if($('pwsave'))$('pwsave').onclick=async e=>{
       const btn=e.currentTarget,msg=$('pwmsg'),p0=$('pw0').value,p1=$('pw1').value,p2=$('pw2').value;
       const bad=t=>{msg.style.color='#e5484d';msg.textContent=t};
       if(!p0)return bad('Bitte dein aktuelles Passwort eingeben.');
@@ -278,7 +281,7 @@ function bind(){
       btn.disabled=false;
       if(error)return bad('Das hat nicht geklappt: '+error.message);
       ['pw0','pw1','pw2'].forEach(i=>$(i).value='');
-      msg.style.color='#30a46c';msg.textContent='Passwort geändert.';toast('Passwort geändert');
+      pwOpen=false;render();toast('Passwort geändert');
     };
     $('logout').onclick=async()=>{await sb.auth.signOut();U=null;PROFILE=null;TASKS=[];USERS=null;tab='home';render()};
   }
@@ -300,7 +303,7 @@ function bind(){
   }
 }
 $('nav').onclick=e=>{const b=e.target.closest('[data-t]');if(b){tab=b.dataset.t;if(tab==='admin')USERS=null;render()}};
-$('gear').onclick=()=>{if(tab==='set')tab=prev;else{prev=tab;tab='set'}render()};
+$('gear').onclick=()=>{pwOpen=false;if(tab==='set')tab=prev;else{prev=tab;tab='set'}render()};
 $('fab').onclick=()=>sheet('new');
 
 /* ---------- Dateien lesen (PDF, Word, Text) ---------- */

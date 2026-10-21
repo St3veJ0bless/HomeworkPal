@@ -271,7 +271,7 @@ async function checkAnn(){try{showAnn(await loadAnn())}catch(e){}}
 /* ---------- Ansichten ---------- */
 const kindChip=t=>isExam(t)?'<span class="xb">Prüfung</span>':isDue(t)?'<span class="kb">Abgabe</span>':'';
 const box=t=>{
-  const due=isDue(t),warn=t.urgent||isExam(t),rng=due&&t.date_to&&t.date_to>t.date;
+  const due=isDue(t),warn=isExam(t),rng=due&&t.date_to&&t.date_to>t.date;
   return `<div class="box ${due?'due':'plan'}${t.done?' done':''}" data-e="${t.id}" style="--c:${esc(clr(t))};--wc:${due?esc(clr(t)):'var(--card)'}"><button class="chk" data-c="${t.id}" aria-label="Erledigt">${I('check',16)}</button><div class="bt"><div class="n">${esc(t.title)}</div>${rng?`<div class="sub">bis ${fmt(t.date_to,{day:'numeric',month:'numeric'})}</div>`:''}</div>${warn?`<span class="wr">${I('warn',22)}</span>`:''}</div>`;
 };
 const dayHead=(k,plus)=>`<div class="dh"><div class="dl"><span class="dd">${wdShort(k)}, ${dmy(k)}</span>${k===TODAY?'<span class="tp">Heute</span>':''}</div>${plus?`<button class="ib sm" data-n="${k}" aria-label="Aufgabe hinzufügen">${I('plus',18)}</button>`:''}</div>`;
@@ -569,7 +569,7 @@ function sheet(mode,t){
       <button class="ic" id="addday" style="margin:10px 0 2px">${I('plus',16)} Tag hinzufügen</button>
       ${f.due.on&&f.due.type==='exam'?`<label>Typ der Arbeitstage</label><div class="chips"><button class="chip ${f.plan.type==='exam'?'on':''}" data-pt="exam"><i></i>Prüfung</button><button class="chip ${f.plan.type===''?'on':''}" data-pt="">Normal</button></div>`:''}
       ${f.plan.type===''?`<label>Farbe</label>${swt('pc',f.plan.color,'p_cx')}`:''}`:''}</div>
-    <label class="ck"><input type="checkbox" id="urg" ${f.urgent?'checked':''}><span>Dringlich <span class="mut">(mit Warnzeichen, steht weiter oben)</span></span></label>
+    <label class="ck"><input type="checkbox" id="urg" ${f.urgent?'checked':''}><span>Dringlich <span class="mut">(steht weiter oben)</span></span></label>
     ${edit?`<button class="ic" id="help" style="width:100%;margin-top:16px">${I('spark',18)} KI-Hilfe zu dieser Aufgabe</button><div class="ai" id="hout" ${t.note?'':'hidden'}>${esc(t.note||'')}</div>
     <button class="red ic" id="del" style="width:100%;margin-top:16px">${I('trash',18)} Aufgabe löschen</button>`:''}`;
   const delHtml=()=>`<label style="margin-top:0">Was soll die KI löschen?</label><textarea id="f_q" style="min-height:120px" placeholder="z. B. Lösche alle Mathe-Kapitel-Aufgaben&#10;oder: Lösche alles zwischen dem 10. und 15. November">${esc(dprompt)}</textarea>

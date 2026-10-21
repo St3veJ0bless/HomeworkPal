@@ -206,8 +206,26 @@ const nA=n=>n+(n===1?' Aufgabe':' Aufgaben');
 
 /* ---------- Zustand ---------- */
 let sb=null,U=null,PROFILE=null,TASKS=[],USERS=null,ANN=[],SC={},HAS_SUBJ=false;
-// Fächer: [Name, Abkürzung, Standardfarbe]
-const SUBJ=[['Biologie','B','#63c466'],['Chemie','C','#f0a23a'],['Mathe','M','#5b8def'],['Geographie','GG','#a08563'],['Geschichte','G','#a18563'],['Englisch','E','#ee739f'],['Französisch','F','#a259d9'],['Italienisch','I','#52b5d6'],['Latein','L','#8e8e93'],['Griechisch','Gr','#6c5ce7'],['Sport','S','#e8643c'],['Angewandte Mathematik','AM','#2fa7a0'],['Spanisch','Sp','#e8b923'],['Physik','P','#34495e'],['Wirtschaft','W','#b07a3c']];
+/* ===== FÄCHER: hier eigene Fächer hinzufügen oder ändern =====
+   Eine Zeile pro Fach: ['Name', 'Abkürzung', 'Standardfarbe'],
+   Neue Zeile einfach kopieren, anpassen und vor die letzte eckige Klammer setzen.
+   Das Komma am Zeilenende nicht vergessen. */
+const SUBJ=[
+  ['Biologie','B','#63c466'],
+  ['Chemie','C','#f0a23a'],
+  ['Mathe','M','#5b8def'],
+  ['Geographie','G','#a08563'],
+  ['Englisch','E','#ee739f'],
+  ['Französisch','F','#a259d9'],
+  ['Italienisch','I','#52b5d6'],
+  ['Latein','L','#8e8e93'],
+  ['Griechisch','Gr','#6c5ce7'],
+  ['Sport','S','#e8643c'],
+  ['Angewandte Mathematik','AM','#2fa7a0'],
+  ['Spanisch','Sp','#e8b923'],
+  ['Physik','P','#34495e'],
+  ['Wirtschaft','W','#b07a3c'],
+];
 const sjAbbr=n=>{const x=SUBJ.find(v=>v[0]===n);return x?x[1]:''};
 const sjColor=n=>SC[n]||(SUBJ.find(v=>v[0]===n)||[])[2]||'#5b8def';
 const sjTag=t=>t.subject&&sjAbbr(t.subject)?`<span class="sj">${esc(sjAbbr(t.subject))}:</span> `:'';
@@ -233,7 +251,7 @@ const isDue=t=>t.kind==='due',isExam=t=>t.kind==='due'&&t.ttype==='exam';
 const endOf=t=>t.date_to||t.date;
 const onDay=(t,k)=>isDue(t)?(k>=t.date&&k<=endOf(t)):t.date===k;
 const clr=t=>t.ttype==='exam'?EXAM:t.color;
-const cmp=(a,b)=>(!!b.urgent-!!a.urgent)||((isDue(a)?0:1)-(isDue(b)?0:1))||a.title.localeCompare(b.title);
+const cmp=(a,b)=>(isExam(b)-isExam(a))||(!!b.urgent-!!a.urgent)||((isDue(a)?0:1)-(isDue(b)?0:1))||a.title.localeCompare(b.title);
 const cmpD=(a,b)=>a.date.localeCompare(b.date)||cmp(a,b);
 const fl=t=>flt==='all'||(flt==='due'?isDue(t):!isDue(t));
 const monOf=s=>{const d=D(s);d.setDate(d.getDate()-((d.getDay()+6)%7));return d};
@@ -631,7 +649,7 @@ function sheet(mode,t){
     <label>Dateien anhängen (PDF, Word .docx, .txt, .md, .csv)</label><input type="file" id="f_f" accept=".pdf,.docx,.txt,.md,.csv,.json,text/*" multiple hidden>
     <button class="p ic" id="pick">${I('clip',18)} Datei hinzufügen</button>
     ${files.map((x,i)=>`<div class="file"><span style="display:flex;gap:8px;align-items:center;min-width:0">${I('file',18)}<span style="overflow-wrap:anywhere">${esc(x.name)}</span></span><button class="ib sm" data-r="${i}" aria-label="Entfernen">${I('x',16)}</button></div>`).join('')}
-    ${HAS_SUBJ?`<label>Fach (optional)</label>${sjHtml(aiSubj,'f_as').replace('class="sjw"','class="sjw" style="margin-top:0"')}`:''}
+    ${HAS_SUBJ?`<label>Fach (optional, sonst wählt die KI selbst)</label>${sjHtml(aiSubj,'f_as').replace('class="sjw"','class="sjw" style="margin-top:0"')}`:''}
     <label>Farbe (Prüfungen sind immer rot)</label>${swt('ac',aiColor,'a_cx')}
     <div class="row" style="margin-top:14px"><button class="p ic" id="go" style="flex:1">${I('spark',18)} Aufgaben erstellen</button></div><div class="mut" id="amsg" style="margin-top:8px">${esc(st)}</div>`;
 
@@ -739,10 +757,11 @@ function sheet(mode,t){
         btn.disabled=true;am.textContent='KI arbeitet … bei einem ganzen Monatsplan kann das eine Minute dauern.';
         try{
           const material=files.map(x=>`### ${x.name}\n${x.text}`).join('\n\n');
-          const r=await callFn('ai',{mode:'plan',prompt,material,today:TODAY});
+          const r=await callFn('ai',{mode:'plan',prompt,material,today:TODAY,subjects:HAS_SUBJ?SUBJ.map(x=>x[0]):[]});
           // importance 2 = Prüfung (fällig), 1 = Abgabe/Frist (fällig), 0 = normale Aufgabe (Plan)
-          const rows=r.tasks.map(x=>{const im=x.importance||0;
-            return {title:x.title,details:x.details||'',date:x.date,date_to:null,kind:im>=1?'due':'plan',ttype:im===2?'exam':'',urgent:false,color:aiColor,...(HAS_SUBJ&&aiSubj?{subject:aiSubj}:{})}});
+          // Fach: Auswahl von Hand gilt für alle, sonst das Fach, das die KI erkannt hat (dann auch dessen Farbe)
+          const rows=r.tasks.map(x=>{const im=x.importance||0,sj=HAS_SUBJ?(aiSubj||(SUBJ.some(v=>v[0]===x.subject)?x.subject:'')):'';
+            return {title:x.title,details:x.details||'',date:x.date,date_to:null,kind:im>=1?'due':'plan',ttype:im===2?'exam':'',urgent:false,color:(!aiSubj&&sj)?sjColor(sj):aiColor,...(sj?{subject:sj}:{})}});
           btn.disabled=false;am.textContent='Prüfe die Liste und tippe auf «Übernehmen».';
           review({title:'Neue Aufgaben prüfen',sub:rows.length+' Aufgaben vorgeschlagen. Noch ist nichts gespeichert. Entferne das Häkchen bei allem, was du nicht möchtest.',items:rows,ok:'Übernehmen',
             onOk:async items=>{

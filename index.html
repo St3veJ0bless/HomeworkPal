@@ -47,6 +47,14 @@ button:disabled{opacity:.5}
 .chk{width:30px;height:30px;border-radius:50%;border:2px solid var(--c);background:none;color:transparent;padding:0;display:grid;place-items:center;flex:none}
 .box.done .chk{background:var(--c);color:#fff}
 .imp{color:#e5484d;font-weight:800}
+.xb{display:inline-block;background:#e5484d;color:#fff;font-size:11px;font-weight:700;border-radius:8px;padding:1px 7px;margin-right:4px;vertical-align:1px;letter-spacing:.02em}
+.xs{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:2px 16px 12px;-webkit-overflow-scrolling:touch}
+.xc{flex:none;width:156px;min-height:178px;scroll-snap-align:start;border-radius:22px;padding:14px;color:#fff;background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 50%,#000));display:flex;flex-direction:column;gap:8px;cursor:pointer;box-shadow:0 6px 16px color-mix(in srgb,var(--c) 40%,transparent)}
+.xd{display:flex;align-items:baseline;gap:6px}
+.xd span{text-transform:uppercase;font-size:12px;font-weight:700;opacity:.9;letter-spacing:.05em}
+.xd b{font-size:40px;line-height:1}
+.xt{flex:1;font-weight:600;font-size:15px;line-height:1.3;overflow-wrap:anywhere}
+.xcd{align-self:flex-start;background:rgba(255,255,255,.25);padding:4px 11px;border-radius:99px;font-size:12px;font-weight:700}
 .dh{display:flex;justify-content:space-between;align-items:center;margin:16px 0 8px;font-weight:700}
 .dh.today span{color:var(--ac)}
 .empty{border:2px dashed var(--bd);border-radius:18px;padding:18px;text-align:center;color:var(--mut);font-size:14px}
@@ -90,9 +98,9 @@ textarea{min-height:110px;resize:vertical}
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* ====== HIER EINTRAGEN (siehe README, Schritt 5) ====== */
-const SUPABASE_URL = 'https://yosnvobeoywbvybakrpr.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlvc252b2Jlb3l3YnZ5YmFrcnByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1MTQ1OTksImV4cCI6MjEwODA5MDU5OX0.04IUeF4cKaOJUKybTDKHhWYfaqPXi-k7OtruBqu9Wog';
+/* ====== HIER EINTRAGEN (siehe README, Schritt 5) ====== */ 
+  const SUPABASE_URL = 'https://yosnvobeoywbvybakrpr.supabase.co'; 
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlvc252b2Jlb3l3YnZ5YmFrcnByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1MTQ1OTksImV4cCI6MjEwODA5MDU5OX0.04IUeF4cKaOJUKybTDKHhWYfaqPXi-k7OtruBqu9Wog'; 
 /* ======================================================= */
 
 const COL=['#e5484d','#f76b15','#f5b800','#30a46c','#0091ff','#3b5bdb','#8e4ec6','#e93d82'];
@@ -150,9 +158,12 @@ async function delTask(t){
 }
 
 /* ---------- Ansichten ---------- */
-const impS=n=>n?'<span class="imp">'+'!'.repeat(n)+'</span> ':'';
+const impS=n=>n===1?'<span class="imp">!</span> ':n===2?'<span class="xb">Prüfung</span> ':'';
 const byDate=(a,b)=>a.date.localeCompare(b.date)||b.imp-a.imp;
-const box=(t,sd=true)=>`<div class="box${t.done?' done':''}" data-e="${t.id}" style="--c:${esc(t.color)}"><div class="bt"><div class="n">${impS(t.imp)}${esc(t.title)}</div>${t.details?`<div class="dt">${esc(t.details)}</div>`:''}${sd?`<div class="mut">${t.date===TODAY?'Heute':fmt(t.date,{weekday:'short',day:'numeric',month:'short'})}</div>`:''}</div><button class="chk" data-c="${t.id}" aria-label="Erledigt">${I('check',18)}</button></div>`;
+const box=(t,sd=true)=>`<div class="box${t.done?' done':''}" data-e="${t.id}" style="--c:${esc(t.color)}"><div class="bt"><div class="n">${impS(t.imp)}${esc(t.title)}</div>${sd?`<div class="mut">${t.date===TODAY?'Heute':fmt(t.date,{weekday:'short',day:'numeric',month:'short'})}</div>`:''}</div><button class="chk" data-c="${t.id}" aria-label="Erledigt">${I('check',18)}</button></div>`;
+const weekWin=()=>{const dow=(new Date().getDay()+6)%7,next=dow>=5;return{next,end:iso(addDays(monOf(TODAY),next?13:6))}};
+const examCard=t=>{const dd=Math.round((D(t.date)-D(TODAY))/864e5),cd=dd<=0?'Heute':dd===1?'Morgen':'in '+dd+' Tagen';
+  return `<div class="xc" data-e="${t.id}" style="--c:${esc(t.color)}"><div class="xd"><span>${fmt(t.date,{weekday:'short'})}</span><b>${D(t.date).getDate()}</b></div><div class="xt">${esc(t.title)}</div><div class="xcd">${cd}</div></div>`};
 const monOf=s=>{const d=D(s);d.setDate(d.getDate()-((d.getDay()+6)%7));return d};
 
 function loginView(){
@@ -167,13 +178,16 @@ function setupView(){
 }
 function home(){
   const td=TASKS.filter(t=>t.date===TODAY),dn=td.filter(t=>t.done).length,pct=td.length?Math.round(dn/td.length*100):0;
-  const hi=TASKS.filter(t=>!t.done&&t.imp>0&&t.date>=TODAY).sort(byDate).slice(0,5),od=TASKS.filter(t=>!t.done&&t.date<TODAY).length;
+  const win=weekWin(),inWin=t=>!t.done&&t.date>=TODAY&&t.date<=win.end;
+  const ex=TASKS.filter(t=>t.imp===2&&inWin(t)).sort(byDate),hi=TASKS.filter(t=>t.imp===1&&inWin(t)).sort(byDate),od=TASKS.filter(t=>!t.done&&t.date<TODAY).length;
+  const wk=win.next?'nächste Woche':'diese Woche';
   const nx=td.filter(t=>!t.done).sort(byDate),h=new Date().getHours(),g=h<11?'Guten Morgen':h<18?'Hallo':'Guten Abend';
   const nm=(PROFILE&&PROFILE.name)||'';
   return `<div class="card"><div class="big">${g}${nm?', '+esc(nm):''}</div><div class="mut">${fmt(TODAY,{weekday:'long',day:'numeric',month:'long'})}</div></div>
   <div class="card"><div class="mut" style="font-weight:600;text-transform:uppercase;letter-spacing:.05em">Heute</div><div style="margin-top:6px">${dn} von ${td.length} erledigt</div><div class="bar"><div style="width:${pct}%"></div></div>${od?`<p class="mut" style="margin-bottom:0">${od} überfällige Aufgabe${od>1?'n':''}</p>`:''}</div>
   <div class="sec">Heute offen</div>${nx.map(t=>box(t,false)).join('')||'<div class="empty">Heute ist nichts mehr offen.</div>'}
-  <div class="sec">Wichtig</div>${hi.map(t=>box(t)).join('')||'<div class="empty">Keine wichtigen offenen Aufgaben.</div>'}`;
+  <div class="sec">Prüfungen ${wk}</div>${ex.length?`<div class="xs">${ex.map(examCard).join('')}</div>`:`<div class="empty">Keine Prüfungen ${wk}.</div>`}
+  <div class="sec">Wichtig ${wk}</div>${hi.map(t=>box(t)).join('')||`<div class="empty">Nichts Wichtiges ${wk}.</div>`}`;
 }
 function cal(){
   const mon=monOf(sel),sun=addDays(mon,6);
@@ -342,7 +356,7 @@ function sheet(mode,t){
       <label>Details / Auftrag (optional)</label><textarea id="f_x" style="min-height:80px" placeholder="Was genau ist zu tun?">${esc(dr.details)}</textarea>
       <label>Tag</label><input type="date" id="f_d" value="${dr.date}">
       ${sw()}
-      <label>Wichtigkeit</label><div class="seg" id="imp">${['Normal','! Wichtig','!! Sehr wichtig'].map((l,i)=>`<button data-i="${i}" class="${dr.imp===i?'on':''}">${l}</button>`).join('')}</div>
+      <label>Wichtigkeit</label><div class="seg" id="imp">${['Normal','! Wichtig','Prüfung'].map((l,i)=>`<button data-i="${i}" class="${dr.imp===i?'on':''}">${l}</button>`).join('')}</div>
       <div class="row" style="margin-top:14px"><button class="p" id="ok" style="flex:1">Speichern</button>${edit?`<button class="red ic" id="del" aria-label="Löschen">${I('trash',18)}</button>`:''}</div>
       ${edit?`<button class="ic" id="help" style="width:100%;margin-top:10px">${I('spark',18)} KI-Hilfe zu dieser Aufgabe</button><div class="ai" id="hout" ${dr.note?'':'hidden'}>${esc(dr.note||'')}</div>`:''}`
     :`<label style="margin-top:0">Was soll die KI machen? Hier kannst du z. B. deinen Monatsplan einfügen.</label><textarea id="f_p" style="min-height:150px" placeholder="z. B. Mein Plan für November: Woche 1 Mathe Kapitel 1–2, Woche 2 Bio Zellbiologie, 20.11. Prüfung Mathe …">${esc(prompt)}</textarea>

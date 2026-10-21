@@ -38,23 +38,107 @@ button:disabled{opacity:.5}
 .mut{color:var(--mut);font-size:14px}
 .sec{margin:18px 2px 8px;text-transform:uppercase;letter-spacing:.05em;font-size:14px;color:var(--mut);font-weight:600}
 .row{display:flex;gap:8px;align-items:center}
-.box{display:flex;align-items:center;gap:12px;min-height:60px;height:auto;padding:14px 14px 14px 16px;border-radius:16px;border-left:6px solid var(--c);background:color-mix(in srgb,var(--c) 20%,var(--card));margin-bottom:10px;cursor:pointer}
+
+/* Segment-Auswahl: Alle | Fällig | Plan */
+.sg{display:flex;gap:4px;padding:4px;border-radius:14px;background:color-mix(in srgb,var(--tx) 7%,var(--bg));margin:0 0 14px}
+.sg button{flex:1;border:0;background:none;color:var(--mut);font-weight:600;padding:10px 6px;border-radius:11px}
+.sg button.on{background:var(--card);color:var(--tx);box-shadow:0 1px 4px rgba(0,0,0,.18)}
+
+/* Aufgaben-Kästen */
+.box{display:flex;align-items:center;gap:12px;min-height:52px;height:auto;padding:12px 14px;border-radius:14px;border:2.5px solid var(--c);margin-bottom:8px;cursor:pointer}
 .box .bt{flex:1;min-width:0}
-.box .n{font-size:16px;font-weight:600;line-height:1.35;overflow-wrap:anywhere;white-space:normal}
-.box .dt{font-size:14px;opacity:.85;margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
-.box .mut{font-size:13px;margin-top:2px}
-.box.done .n,.box.done .dt{text-decoration:line-through;opacity:.55}
-.chk{width:30px;height:30px;border-radius:50%;border:2px solid var(--c);background:none;color:transparent;padding:0;display:grid;place-items:center;flex:none}
-.box.done .chk{background:var(--c);color:#fff}
-.imp{color:#e5484d;font-weight:800}
-.xb{display:inline-block;background:#e5484d;color:#fff;font-size:11px;font-weight:700;border-radius:8px;padding:1px 7px;margin-right:4px;vertical-align:1px;letter-spacing:.02em}
+.box .n{font-size:16px;font-weight:600;line-height:1.3;overflow-wrap:anywhere;white-space:normal}
+.box .sub{font-size:12px;opacity:.85;margin-top:1px}
+.box .wr{flex:none;display:grid;place-items:center}
+.box.due{background:var(--c);color:#fff}
+.box.due .chk{border-color:#fff;color:transparent}
+.box.due.done .chk{background:#fff;color:var(--c)}
+.box.plan{background:color-mix(in srgb,var(--c) 18%,var(--card));color:var(--tx)}
+.box.plan .chk{border-color:var(--tx);color:transparent}
+.box.plan.done .chk{background:var(--tx);color:var(--card)}
+.box.plan .wr{color:var(--c)}
+.box.done{opacity:.55}
+.box.done .n{text-decoration:line-through}
+.chk{width:26px;height:26px;border-radius:50%;border:2px solid;background:none;padding:0;display:grid;place-items:center;flex:none}
+.dh{display:flex;justify-content:space-between;align-items:center;margin:16px 0 8px;min-height:32px}
+.dl{display:flex;align-items:center;gap:10px}
+.dd{color:var(--mut);font-weight:700;font-size:16px}
+.tp{background:var(--tx);color:var(--bg);font-weight:700;font-size:13px;border-radius:99px;padding:3px 12px}
+.empty{border:2px dashed var(--bd);border-radius:14px;padding:16px;text-align:center;color:var(--mut);font-size:14px;margin-bottom:8px}
+.xb{display:inline-block;background:#c93d2e;color:#fff;font-size:11px;font-weight:700;border-radius:8px;padding:1px 7px;margin-right:4px;vertical-align:1px}
+.kb{display:inline-block;background:var(--tx);color:var(--bg);font-size:11px;font-weight:700;border-radius:8px;padding:1px 7px;margin-right:4px;vertical-align:1px}
+
+/* Prüfungs-Karten (Startseite) */
 .xs{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -16px;padding:2px 16px 12px;-webkit-overflow-scrolling:touch}
 .xc{flex:none;width:156px;min-height:178px;scroll-snap-align:start;border-radius:22px;padding:14px;color:#fff;background:linear-gradient(150deg,var(--c),color-mix(in srgb,var(--c) 50%,#000));display:flex;flex-direction:column;gap:8px;cursor:pointer;box-shadow:0 6px 16px color-mix(in srgb,var(--c) 40%,transparent)}
 .xd{display:flex;align-items:baseline;gap:6px}
 .xd span{text-transform:uppercase;font-size:12px;font-weight:700;opacity:.9;letter-spacing:.05em}
 .xd b{font-size:40px;line-height:1}
 .xt{flex:1;font-weight:600;font-size:15px;line-height:1.3;overflow-wrap:anywhere}
+.xcd{align-self:flex-start;background:rgba(255,255,255,.25);padding:4px 11px;border-radius:99px;font-size:12px;font-weight:700}
+
+.strip{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px}
+.wd{border:0;background:none;padding:4px 0;border-radius:12px;display:flex;flex-direction:column;align-items:center;font-size:12px;color:var(--mut)}
+.wd b{font-size:16px;color:var(--tx);width:34px;height:34px;line-height:34px;border-radius:50%}
+.wd.today b{color:var(--ac)}
+.wd.sel b{background:var(--ac);color:#fff}
+.seg{display:flex;gap:6px;margin-bottom:12px}
+.seg button{flex:1}
+.seg button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+
+/* Blätter / Formulare */
+.sheetbg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
 .sheetbg.c{align-items:center}
+.sheet{background:var(--bg);width:100%;max-width:640px;max-height:94%;overflow-y:auto;border-radius:22px 22px 0 0;padding:16px 16px calc(20px + env(safe-area-inset-bottom,0px))}
+.sheet h3{margin:0;font-size:20px}
+label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}
+input[type=text],input[type=email],input[type=password],input[type=date],textarea,select{width:100%;min-width:0;font:inherit;font-size:16px;padding:11px 12px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx)}
+textarea{min-height:110px;resize:vertical}
+.sheet input.ti{font-size:26px;font-weight:700;border:0;border-bottom:1px solid var(--bd);border-radius:0;background:none;padding:10px 2px;margin-top:4px}
+.sheet textarea.ds{border:0;background:color-mix(in srgb,var(--tx) 6%,var(--bg));min-height:90px;margin-top:12px;border-radius:16px;padding:14px}
+.fc{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:14px;margin:14px 0}
+.fh{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.fh b{font-size:19px}
+.g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.g2>div{min-width:0}
+input[type=date]{min-width:0;max-width:100%;min-height:46px}
+label.sw2{position:relative;display:inline-block;width:52px;height:32px;flex:none;margin:0}
+.sw2 input{opacity:0;width:0;height:0;position:absolute}
+.sw2 span{position:absolute;inset:0;border-radius:99px;background:color-mix(in srgb,var(--tx) 20%,var(--bg));transition:.15s}
+.sw2 span::after{content:'';position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.35);transition:.15s}
+.sw2 input:checked+span{background:var(--ac)}
+.sw2 input:checked+span::after{transform:translateX(20px)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--bd);border-radius:99px;padding:9px 16px;background:var(--card);font-weight:600}
+.chip.on{border:2px solid var(--tx);padding:8.5px 15.5px}
+.chip i{width:14px;height:14px;border-radius:50%;background:#c93d2e;display:inline-block}
+.dayrow{display:flex;gap:8px;align-items:center;margin-top:8px}
+.dw{width:30px;color:var(--mut);font-weight:700;font-size:14px;flex:none}
+button.sq{width:44px;height:44px;padding:0;display:grid;place-items:center;flex:none}
+label.ck{display:flex;gap:12px;align-items:center;font-size:17px;color:var(--tx);margin:16px 2px 4px}
+.ck input{width:24px;height:24px;flex:none;accent-color:var(--ac)}
+.ck .mut{font-size:13px}
+.sw{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.sw i{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid transparent;outline:1px solid var(--bd)}
+.sw i.on{border-color:var(--bg);outline:2px solid var(--tx)}
+.sw input[type=color]{width:34px;height:34px;padding:0;border:0;background:none;border-radius:50%;overflow:hidden;cursor:pointer;outline:1px solid var(--bd);-webkit-appearance:none;appearance:none}
+.sw input[type=color]::-webkit-color-swatch-wrapper{padding:0}
+.sw input[type=color]::-webkit-color-swatch{border:0;border-radius:50%}
+.sw input[type=color]::-moz-color-swatch{border:0;border-radius:50%}
+.ai{white-space:pre-wrap;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:10px;font-size:14px}
+.big{font-size:28px;font-weight:700}
+.bar{height:10px;border-radius:5px;background:var(--bd);overflow:hidden;margin-top:8px}
+.bar div{height:100%;background:var(--ac)}
+.file{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;padding:8px 10px;background:var(--card);border:1px solid var(--bd);border-radius:12px;font-size:14px}
+.login{max-width:380px;margin:12vh auto 0}
+.login h1{text-align:center;margin-bottom:6px}
+.user{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--bd)}
+.user:first-of-type{border-top:0}
+.user .u{flex:1;min-width:0;overflow-wrap:anywhere}
+.badge{font-size:11px;background:var(--ac);color:#fff;border-radius:8px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom,0px));background:#222;color:#fff;padding:10px 16px;border-radius:12px;z-index:50;max-width:88%;font-size:14px;text-align:center}
+
+/* Update-Fenster und Prüf-Bildschirm */
 .pop{background:var(--bg);width:100%;max-width:420px;max-height:86%;overflow-y:auto;border-radius:24px;padding:22px 20px 18px;margin:16px}
 .pop .pi{width:48px;height:48px;border-radius:50%;background:var(--ac);color:#fff;display:grid;place-items:center;margin-bottom:12px}
 .pop h3{font-size:22px;margin:2px 0 0}
@@ -70,40 +154,6 @@ button:disabled{opacity:.5}
 .ri .rdt{font-size:13px;color:var(--mut);margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}
 .rf{display:flex;gap:8px;padding-top:12px}
 .rf button{flex:1}
-.xcd{align-self:flex-start;background:rgba(255,255,255,.25);padding:4px 11px;border-radius:99px;font-size:12px;font-weight:700}
-.dh{display:flex;justify-content:space-between;align-items:center;margin:16px 0 8px;font-weight:700}
-.dh.today span{color:var(--ac)}
-.empty{border:2px dashed var(--bd);border-radius:18px;padding:18px;text-align:center;color:var(--mut);font-size:14px}
-.strip{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:12px}
-.wd{border:0;background:none;padding:4px 0;border-radius:12px;display:flex;flex-direction:column;align-items:center;font-size:12px;color:var(--mut)}
-.wd b{font-size:16px;color:var(--tx);width:34px;height:34px;line-height:34px;border-radius:50%}
-.wd.today b{color:var(--ac)}
-.wd.sel b{background:var(--ac);color:#fff}
-.seg{display:flex;gap:6px;margin-bottom:12px}
-.seg button{flex:1}
-.seg button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
-.sheetbg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
-.sheet{background:var(--bg);width:100%;max-width:640px;max-height:92%;overflow-y:auto;border-radius:22px 22px 0 0;padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
-.sheet h3{margin:0;font-size:20px}
-label{display:block;font-size:13px;color:var(--mut);margin:12px 0 4px}
-input[type=text],input[type=email],input[type=password],input[type=date],textarea,select{width:100%;font:inherit;font-size:16px;padding:11px 12px;border-radius:12px;border:1px solid var(--bd);background:var(--card);color:var(--tx)}
-textarea{min-height:110px;resize:vertical}
-.sw{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.sw i{width:34px;height:34px;border-radius:50%;cursor:pointer;border:3px solid transparent;outline:1px solid var(--bd)}
-.sw i.on{border-color:var(--bg);outline:2px solid var(--tx)}
-.sw input{width:38px;height:38px;padding:0;border:0;background:none}
-.ai{white-space:pre-wrap;background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px;margin-top:10px;font-size:14px}
-.big{font-size:28px;font-weight:700}
-.bar{height:10px;border-radius:5px;background:var(--bd);overflow:hidden;margin-top:8px}
-.bar div{height:100%;background:var(--ac)}
-.file{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;padding:8px 10px;background:var(--card);border:1px solid var(--bd);border-radius:12px;font-size:14px}
-.login{max-width:380px;margin:12vh auto 0}
-.login h1{text-align:center;margin-bottom:6px}
-.user{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--bd)}
-.user:first-of-type{border-top:0}
-.user .u{flex:1;min-width:0;overflow-wrap:anywhere}
-.badge{font-size:11px;background:var(--ac);color:#fff;border-radius:8px;padding:2px 6px;margin-left:6px;vertical-align:middle}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(150px + env(safe-area-inset-bottom,0px));background:#222;color:#fff;padding:10px 16px;border-radius:12px;z-index:50;max-width:88%;font-size:14px;text-align:center}
 </style>
 </head>
 <body>
@@ -114,13 +164,14 @@ textarea{min-height:110px;resize:vertical}
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-/* ====== HIER EINTRAGEN (siehe README, Schritt 5) ====== */ 
-const SUPABASE_URL = 'https://yosnvobeoywbvybakrpr.supabase.co'; 
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlvc252b2Jlb3l3YnZ5YmFrcnByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1MTQ1OTksImV4cCI6MjEwODA5MDU5OX0.04IUeF4cKaOJUKybTDKHhWYfaqPXi-k7OtruBqu9Wog'; 
+/* ====== HIER EINTRAGEN (siehe README, Schritt 5) ====== */
+const SUPABASE_URL = 'https://yosnvobeoywbvybakrpr.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlvc252b2Jlb3l3YnZ5YmFrcnByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1MTQ1OTksImV4cCI6MjEwODA5MDU5OX0.04IUeF4cKaOJUKybTDKHhWYfaqPXi-k7OtruBqu9Wog';
 /* ======================================================= */
 
-const COL=['#e5484d','#f76b15','#f5b800','#30a46c','#0091ff','#3b5bdb','#8e4ec6','#e93d82'];
-const P={home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',list:'<path d="M10 6h11M10 12h11M10 18h11"/><path d="M3 6l1.5 1.5L7 5M3 12l1.5 1.5L7 11M3 18l1.5 1.5L7 17"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/>',plus:'<path d="M12 5v14M5 12h14"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',clip:'<path d="M21 11l-9 9a5 5 0 01-7-7l9-9a3.5 3.5 0 015 5l-9 9a2 2 0 01-3-3l8-8"/>',spark:'<path d="M11 3l1.8 5.2L18 10l-5.2 1.8L11 17l-1.8-5.2L4 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',pen:'<path d="M4 20h4L19 9l-4-4L4 16z"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',l:'<path d="M15 5l-7 7 7 7"/>',r:'<path d="M9 5l7 7-7 7"/>',file:'<path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5"/>',check:'<path d="M5 12.5l4.5 4.5L19 7"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',moon:'<path d="M21 13A9 9 0 1111 3a7 7 0 0010 10z"/>',auto:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-4 3.5-6 6.5-6s6 2 6.5 6"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14c2 .7 3.3 2.7 3.5 6"/>',logout:'<path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/>',key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>'};
+const COL=['#e5484d','#f76b15','#f5b800','#30a46c','#0091ff','#3b5bdb','#8e4ec6','#e93d82'];   // Akzentfarben der App
+const PAL=['#5b8def','#63c466','#f0a23a','#a259d9','#ee739f','#52b5d6','#8e8e93','#a08563'],EXAM='#c93d2e';   // Farben der Aufgaben
+const P={home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>',cal:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',list:'<path d="M10 6h11M10 12h11M10 18h11"/><path d="M3 6l1.5 1.5L7 5M3 12l1.5 1.5L7 11M3 18l1.5 1.5L7 17"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.7 1.7 0 00-1.8-.3 1.7 1.7 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.7 1.7 0 00-1.1-1.5 1.7 1.7 0 00-1.8.3l-.1.1a2 2 0 11-2.8-2.8l.1-.1a1.7 1.7 0 00.3-1.8 1.7 1.7 0 00-1.5-1H3a2 2 0 110-4h.1a1.7 1.7 0 001.5-1.1 1.7 1.7 0 00-.3-1.8l-.1-.1a2 2 0 112.8-2.8l.1.1a1.7 1.7 0 001.8.3H9a1.7 1.7 0 001-1.5V3a2 2 0 114 0v.1a1.7 1.7 0 001 1.5 1.7 1.7 0 001.8-.3l.1-.1a2 2 0 112.8 2.8l-.1.1a1.7 1.7 0 00-.3 1.8V9a1.7 1.7 0 001.5 1H21a2 2 0 110 4h-.1a1.7 1.7 0 00-1.5 1z"/>',plus:'<path d="M12 5v14M5 12h14"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',clip:'<path d="M21 11l-9 9a5 5 0 01-7-7l9-9a3.5 3.5 0 015 5l-9 9a2 2 0 01-3-3l8-8"/>',spark:'<path d="M11 3l1.8 5.2L18 10l-5.2 1.8L11 17l-1.8-5.2L4 10l5.2-1.8z"/><path d="M19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',l:'<path d="M15 5l-7 7 7 7"/>',r:'<path d="M9 5l7 7-7 7"/>',file:'<path d="M6 3h8l5 5v13H6z"/><path d="M14 3v5h5"/>',check:'<path d="M5 12.5l4.5 4.5L19 7"/>',sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',moon:'<path d="M21 13A9 9 0 1111 3a7 7 0 0010 10z"/>',auto:'<rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.5-4 3.5-6 6.5-6s6 2 6.5 6"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14c2 .7 3.3 2.7 3.5 6"/>',logout:'<path d="M9 4H5v16h4M16 8l4 4-4 4M20 12H9"/>',key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>',warn:'<path d="M12 2.8c.5 0 .9.3 1.2.7l8.2 14.4c.6 1-.1 2.3-1.2 2.3H3.8c-1.1 0-1.8-1.3-1.2-2.3L10.8 3.5c.3-.4.7-.7 1.2-.7z" fill="currentColor" stroke="none"/><path d="M12 9.2v4.6M12 16.9h.01" style="stroke:var(--wc,#fff)" stroke-width="2.4"/>'};
 const I=(n,s=22)=>`<svg viewBox="0 0 24 24" width="${s}" height="${s}" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
 
 const $=i=>document.getElementById(i);
@@ -129,16 +180,20 @@ const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+Stri
 const D=s=>new Date(s+'T12:00'),fmt=(s,o)=>D(s).toLocaleDateString('de-CH',o);
 const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x};
 const TODAY=iso(new Date());
+const dmy=s=>fmt(s,{day:'2-digit',month:'2-digit',year:'numeric'});
+const wdShort=s=>s?fmt(s,{weekday:'short'}).replace('.',''):'';
+const uuid=()=>crypto.randomUUID?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,c=>{const r=Math.random()*16|0;return(c==='x'?r:(r&3|8)).toString(16)});
+const nA=n=>n+(n===1?' Aufgabe':' Aufgaben');
 
 /* ---------- Zustand ---------- */
 let sb=null,U=null,PROFILE=null,TASKS=[],USERS=null,ANN=[];
-let tab='home',prev='home',sel=TODAY,cv='week',pwOpen=false;
+let tab='home',prev='home',sel=TODAY,cv='week',pwOpen=false,annOpen=false,flt='all';
 const LS='lernplaner-set';
 let SET={accent:'#3b5bdb',theme:'auto'};
 try{Object.assign(SET,JSON.parse(localStorage.getItem(LS)||'{}'))}catch(e){}
 const saveSet=()=>{try{localStorage.setItem(LS,JSON.stringify(SET))}catch(e){}};
 
-function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3500)}
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),3800)}
 function applyTheme(){const r=document.documentElement;SET.theme==='auto'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',SET.theme);r.style.setProperty('--ac',SET.accent)}
 
 async function callFn(name,body){
@@ -148,16 +203,29 @@ async function callFn(name,body){
   return data;
 }
 
+/* ---------- Aufgaben: Hilfsfunktionen ---------- */
+// kind: 'due' = fällig (Abgabe/Prüfung), 'plan' = "Ich mache es am"
+const isDue=t=>t.kind==='due',isExam=t=>t.kind==='due'&&t.ttype==='exam';
+const endOf=t=>t.date_to||t.date;
+const onDay=(t,k)=>isDue(t)?(k>=t.date&&k<=endOf(t)):t.date===k;
+const clr=t=>t.ttype==='exam'?EXAM:t.color;
+const cmp=(a,b)=>(!!b.urgent-!!a.urgent)||((isDue(a)?0:1)-(isDue(b)?0:1))||a.title.localeCompare(b.title);
+const cmpD=(a,b)=>a.date.localeCompare(b.date)||cmp(a,b);
+const fl=t=>flt==='all'||(flt==='due'?isDue(t):!isDue(t));
+const monOf=s=>{const d=D(s);d.setDate(d.getDate()-((d.getDay()+6)%7));return d};
+
 /* ---------- Daten laden / speichern ---------- */
 async function loadAll(){
-  const [p,t]=await Promise.all([
+  const [p,t,chk]=await Promise.all([
     sb.from('profiles').select('*').eq('id',U.id).maybeSingle(),
-    sb.from('tasks').select('*').order('date')
+    sb.from('tasks').select('*').order('date'),
+    sb.from('tasks').select('kind').limit(1)
   ]);
   PROFILE=p.data||{name:'',email:U.email,is_admin:false};
   TASKS=t.data||[];
-  // Aufräumen: Aufgaben, die älter als 30 Tage sind, löschen
-  const lim=iso(addDays(new Date(),-30)),old=TASKS.filter(x=>x.date<lim);
+  if(chk.error)toast('Bitte zuerst das SQL-Update 2 (update-2-planer.sql) in Supabase ausführen.');
+  // Aufräumen: Aufgaben, die mehr als 30 Tage zurückliegen, löschen
+  const lim=iso(addDays(new Date(),-30)),old=TASKS.filter(x=>endOf(x)<lim);
   if(old.length){await delIds(old.map(x=>x.id)).catch(()=>{})}
 }
 async function delIds(ids){
@@ -167,6 +235,15 @@ async function delIds(ids){
   }
   const gone=new Set(ids);TASKS=TASKS.filter(x=>!gone.has(x.id));
 }
+async function addTasks(rows){
+  const {data,error}=await sb.from('tasks').insert(rows).select();
+  if(error)throw error;TASKS.push(...data);return data;
+}
+async function updTask(t,patch){
+  const {error}=await sb.from('tasks').update(patch).eq('id',t.id);
+  if(error)throw error;Object.assign(t,patch);
+}
+
 /* ---------- Newsletter / Update-Ankündigungen ---------- */
 async function loadAnn(){
   ANN=[];
@@ -174,7 +251,7 @@ async function loadAnn(){
     sb.from('announcements').select('*').order('created_at',{ascending:false}).limit(50),
     sb.from('announcement_reads').select('announcement_id')
   ]);
-  if(a.error||r.error)return [];   // Tabellen fehlen noch (SQL-Update nicht ausgeführt): still ignorieren
+  if(a.error||r.error)return [];   // Tabellen fehlen noch (SQL-Update 1 nicht ausgeführt): still ignorieren
   ANN=a.data||[];
   const seen=new Set((r.data||[]).map(x=>x.announcement_id));
   const since=PROFILE&&PROFILE.created_at?new Date(PROFILE.created_at):new Date(0);
@@ -190,28 +267,18 @@ function showAnn(list){
   bg.querySelector('#annok').onclick=()=>{bg.remove();showAnn(list.slice(1))};
 }
 async function checkAnn(){try{showAnn(await loadAnn())}catch(e){}}
-async function addTasks(rows){
-  const {data,error}=await sb.from('tasks').insert(rows).select();
-  if(error)throw error;TASKS.push(...data);return data;
-}
-async function updTask(t,patch){
-  const {error}=await sb.from('tasks').update(patch).eq('id',t.id);
-  if(error)throw error;Object.assign(t,patch);
-}
-async function delTask(t){
-  const {error}=await sb.from('tasks').delete().eq('id',t.id);
-  if(error)throw error;TASKS=TASKS.filter(x=>x.id!==t.id);
-}
 
 /* ---------- Ansichten ---------- */
-const nA=n=>n+(n===1?' Aufgabe':' Aufgaben');
-const impS=n=>n===1?'<span class="imp">!</span> ':n===2?'<span class="xb">Prüfung</span> ':'';
-const byDate=(a,b)=>a.date.localeCompare(b.date)||b.imp-a.imp;
-const box=(t,sd=true)=>`<div class="box${t.done?' done':''}" data-e="${t.id}" style="--c:${esc(t.color)}"><div class="bt"><div class="n">${impS(t.imp)}${esc(t.title)}</div>${sd?`<div class="mut">${t.date===TODAY?'Heute':fmt(t.date,{weekday:'short',day:'numeric',month:'short'})}</div>`:''}</div><button class="chk" data-c="${t.id}" aria-label="Erledigt">${I('check',18)}</button></div>`;
+const kindChip=t=>isExam(t)?'<span class="xb">Prüfung</span>':isDue(t)?'<span class="kb">Abgabe</span>':'';
+const box=t=>{
+  const due=isDue(t),warn=t.urgent||isExam(t),rng=due&&t.date_to&&t.date_to>t.date;
+  return `<div class="box ${due?'due':'plan'}${t.done?' done':''}" data-e="${t.id}" style="--c:${esc(clr(t))};--wc:${due?esc(clr(t)):'var(--card)'}"><button class="chk" data-c="${t.id}" aria-label="Erledigt">${I('check',16)}</button><div class="bt"><div class="n">${esc(t.title)}</div>${rng?`<div class="sub">bis ${fmt(t.date_to,{day:'numeric',month:'numeric'})}</div>`:''}</div>${warn?`<span class="wr">${I('warn',22)}</span>`:''}</div>`;
+};
+const dayHead=(k,plus)=>`<div class="dh"><div class="dl"><span class="dd">${wdShort(k)}, ${dmy(k)}</span>${k===TODAY?'<span class="tp">Heute</span>':''}</div>${plus?`<button class="ib sm" data-n="${k}" aria-label="Aufgabe hinzufügen">${I('plus',18)}</button>`:''}</div>`;
+const fltBar=()=>`<div class="sg">${[['all','Alle'],['due','Fällig'],['plan','Plan']].map(([k,l])=>`<button data-f="${k}" class="${flt===k?'on':''}">${l}</button>`).join('')}</div>`;
 const weekWin=()=>{const dow=(new Date().getDay()+6)%7,next=dow>=5;return{next,end:iso(addDays(monOf(TODAY),next?13:6))}};
-const examCard=t=>{const dd=Math.round((D(t.date)-D(TODAY))/864e5),cd=dd<=0?'Heute':dd===1?'Morgen':'in '+dd+' Tagen';
-  return `<div class="xc" data-e="${t.id}" style="--c:${esc(t.color)}"><div class="xd"><span>${fmt(t.date,{weekday:'short'})}</span><b>${D(t.date).getDate()}</b></div><div class="xt">${esc(t.title)}</div><div class="xcd">${cd}</div></div>`};
-const monOf=s=>{const d=D(s);d.setDate(d.getDate()-((d.getDay()+6)%7));return d};
+const examCard=t=>{const dd=Math.max(0,Math.round((D(t.date)-D(TODAY))/864e5)),cd=dd===0?'Heute':dd===1?'Morgen':'in '+dd+' Tagen',d0=dd===0?TODAY:t.date;
+  return `<div class="xc" data-e="${t.id}" style="--c:${esc(clr(t))}"><div class="xd"><span>${wdShort(d0)}</span><b>${D(d0).getDate()}</b></div><div class="xt">${esc(t.title)}</div><div class="xcd">${cd}</div></div>`};
 
 function loginView(){
   return `<div class="login"><h1>Lernplaner</h1><p class="mut" style="text-align:center;margin-top:0">Bitte melde dich an.</p>
@@ -224,45 +291,50 @@ function setupView(){
   return `<div class="login"><h1>Einrichtung fehlt</h1><div class="card"><p>Trage in <b>index.html</b> ganz oben deine <b>SUPABASE_URL</b> und den <b>SUPABASE_ANON_KEY</b> ein. Die Anleitung steht in der README, Schritt 5.</p></div></div>`;
 }
 function home(){
-  const td=TASKS.filter(t=>t.date===TODAY),dn=td.filter(t=>t.done).length,pct=td.length?Math.round(dn/td.length*100):0;
-  const win=weekWin(),inWin=t=>!t.done&&t.date>=TODAY&&t.date<=win.end;
-  const ex=TASKS.filter(t=>t.imp===2&&inWin(t)).sort(byDate),hi=TASKS.filter(t=>t.imp===1&&inWin(t)).sort(byDate),od=TASKS.filter(t=>!t.done&&t.date<TODAY).length;
+  const td=TASKS.filter(t=>onDay(t,TODAY)),dn=td.filter(t=>t.done).length,pct=td.length?Math.round(dn/td.length*100):0;
+  const win=weekWin(),inWin=t=>!t.done&&endOf(t)>=TODAY&&t.date<=win.end;
+  const ex=TASKS.filter(t=>isExam(t)&&inWin(t)).sort(cmpD),ab=TASKS.filter(t=>isDue(t)&&!isExam(t)&&inWin(t)).sort(cmpD);
+  const od=TASKS.filter(t=>!t.done&&endOf(t)<TODAY).length;
   const wk=win.next?'nächste Woche':'diese Woche';
-  const nx=td.filter(t=>!t.done).sort(byDate),h=new Date().getHours(),g=h<11?'Guten Morgen':h<18?'Hallo':'Guten Abend';
+  const nx=td.filter(t=>!t.done).sort(cmp),h=new Date().getHours(),g=h<11?'Guten Morgen':h<18?'Hallo':'Guten Abend';
   const nm=(PROFILE&&PROFILE.name)||'';
   return `<div class="card"><div class="big">${g}${nm?', '+esc(nm):''}</div><div class="mut">${fmt(TODAY,{weekday:'long',day:'numeric',month:'long'})}</div></div>
   <div class="card"><div class="mut" style="font-weight:600;text-transform:uppercase;letter-spacing:.05em">Heute</div><div style="margin-top:6px">${dn} von ${td.length} erledigt</div><div class="bar"><div style="width:${pct}%"></div></div>${od?`<p class="mut" style="margin-bottom:0">${od} überfällige Aufgabe${od>1?'n':''}</p>`:''}</div>
-  <div class="sec">Heute offen</div>${nx.map(t=>box(t,false)).join('')||'<div class="empty">Heute ist nichts mehr offen.</div>'}
+  <div class="sec">Heute offen</div>${nx.map(box).join('')||'<div class="empty">Heute ist nichts mehr offen.</div>'}
   <div class="sec">Prüfungen ${wk}</div>${ex.length?`<div class="xs">${ex.map(examCard).join('')}</div>`:`<div class="empty">Keine Prüfungen ${wk}.</div>`}
-  <div class="sec">Wichtig ${wk}</div>${hi.map(t=>box(t)).join('')||`<div class="empty">Nichts Wichtiges ${wk}.</div>`}`;
+  <div class="sec">Abgaben ${wk}</div>${ab.map(box).join('')||`<div class="empty">Keine Abgaben ${wk}.</div>`}`;
 }
 function cal(){
   const mon=monOf(sel),sun=addDays(mon,6);
   const lab=mon.toLocaleDateString('de-CH',{day:'numeric',month:'short'})+' – '+sun.toLocaleDateString('de-CH',{day:'numeric',month:'short'});
   let h=`<div class="seg"><button data-v="week" class="${cv==='week'?'on':''}">Woche</button><button data-v="day" class="${cv==='day'?'on':''}">Tag</button></div>
-  <div class="row" style="justify-content:space-between;margin-bottom:6px"><button class="ib" data-w="-7" aria-label="Zurück">${I('l')}</button><b>${lab}</b><button class="ib" data-w="7" aria-label="Weiter">${I('r')}</button></div>`;
+  <div class="row" style="justify-content:space-between;margin-bottom:10px"><button class="ib" data-w="-7" aria-label="Zurück">${I('l')}</button><b>${lab}</b><button class="ib" data-w="7" aria-label="Weiter">${I('r')}</button></div>${fltBar()}`;
+  const dayList=k=>TASKS.filter(t=>fl(t)&&onDay(t,k)).sort(cmp);
   if(cv==='week'){
-    for(let i=0;i<7;i++){const k=iso(addDays(mon,i)),l=TASKS.filter(t=>t.date===k).sort(byDate);
-      h+=`<div class="dh${k===TODAY?' today':''}"><span>${fmt(k,{weekday:'long',day:'numeric',month:'long'})}</span><button class="ib sm" data-n="${k}" aria-label="Aufgabe hinzufügen">${I('plus',18)}</button></div>${l.map(t=>box(t,false)).join('')||'<div class="empty">Nichts geplant</div>'}`}
+    for(let i=0;i<7;i++){const k=iso(addDays(mon,i)),l=dayList(k);
+      h+=dayHead(k,true)+(l.map(box).join('')||'<div class="empty">Nichts geplant</div>')}
   }else{
     h+='<div class="strip">';
     for(let i=0;i<7;i++){const d=addDays(mon,i),k=iso(d);h+=`<button class="wd${k===sel?' sel':''}${k===TODAY?' today':''}" data-d="${k}">${fmt(k,{weekday:'narrow'})}<b>${d.getDate()}</b></button>`}
-    const l=TASKS.filter(t=>t.date===sel).sort(byDate);
-    h+=`</div><div class="dh"><span>${fmt(sel,{weekday:'long',day:'numeric',month:'long'})}</span></div>${l.map(t=>box(t,false)).join('')||'<div class="empty">Nichts geplant. Tippe auf +, um etwas hinzuzufügen.</div>'}`;
+    const l=dayList(sel);
+    h+=`</div>${dayHead(sel,false)}${l.map(box).join('')||'<div class="empty">Nichts geplant. Tippe auf +, um etwas hinzuzufügen.</div>'}`;
   }
   return h;
 }
 function tasksView(){
-  const op=TASKS.filter(t=>!t.done).sort(byDate),dn=TASKS.filter(t=>t.done).sort(byDate).reverse();
-  return `<div class="sec" style="margin-top:6px">Offen (${op.length})</div>${op.map(t=>box(t)).join('')||'<div class="empty">Nichts offen.</div>'}${dn.length?`<div class="sec">Erledigt (${dn.length})</div>${dn.map(t=>box(t)).join('')}`:''}`;
+  const grouped=list=>{let last='',h='';list.forEach(t=>{if(t.date!==last){last=t.date;h+=dayHead(t.date,false)}h+=box(t)});return h};
+  const op=TASKS.filter(t=>!t.done&&fl(t)).sort(cmpD),dn=TASKS.filter(t=>t.done&&fl(t)).sort((a,b)=>b.date.localeCompare(a.date)||cmp(a,b));
+  return `${fltBar()}<div class="sec" style="margin-top:6px">Offen (${op.length})</div>${grouped(op)||'<div class="empty">Nichts offen.</div>'}${dn.length?`<div class="sec">Erledigt (${dn.length})</div>${grouped(dn)}`:''}`;
 }
 function adminView(){
   const list=USERS?USERS.map(u=>`<div class="user"><div class="u"><b>${esc(u.name||u.email)}</b>${u.is_admin?'<span class="badge">Admin</span>':''}<div class="mut">${esc(u.email)}</div></div><button class="ib sm" data-pw="${u.id}" aria-label="Passwort setzen">${I('key',16)}</button>${u.id===U.id?'':`<button class="ib sm" style="background:#e5484d" data-du="${u.id}" aria-label="Löschen">${I('trash',16)}</button>`}</div>`).join(''):'<p class="mut">Lade …</p>';
   const anns=ANN.map(a=>`<div class="user"><div class="u"><b>${esc(a.title)}</b><div class="mut">${fmt(a.created_at.slice(0,10),{day:'numeric',month:'short',year:'numeric'})}</div></div><button class="ib sm" style="background:#e5484d" data-na="${a.id}" aria-label="Löschen">${I('trash',16)}</button></div>`).join('')||'<p class="mut" style="margin:0">Noch keine Updates.</p>';
-  return `<div class="card"><b>Update ankündigen</b><p class="mut" style="margin:4px 0 0">Jeder Benutzer sieht es einmal beim nächsten Öffnen der App.</p>
+  const compose=annOpen?`<div class="row" style="justify-content:space-between"><b>Neues Update</b><button class="ib sm" id="nx" aria-label="Schliessen">${I('x',16)}</button></div><p class="mut" style="margin:4px 0 0">Jeder Benutzer sieht es einmal beim nächsten Öffnen der App.</p>
   <label>Titel</label><input type="text" id="nt" maxlength="80" autocomplete="off" placeholder="z. B. Neu: Prüfungen auf der Startseite">
   <label>Text</label><textarea id="nb" maxlength="2000" placeholder="Was ist neu?"></textarea>
-  <button class="p ic" id="nsend" style="width:100%;margin-top:14px">${I('spark',18)} Veröffentlichen</button></div>
+  <button class="p ic" id="nsend" style="width:100%;margin-top:14px">${I('spark',18)} Veröffentlichen</button>`
+  :`<button class="p ic" id="nopen" style="width:100%">${I('plus',18)} Update erstellen</button>`;
+  return `<div class="card">${compose}</div>
   <div class="sec">Bisherige Updates</div><div class="card">${anns}</div>
   <div class="card"><b>Neuen Benutzer anlegen</b>
   <label>Name</label><input type="text" id="an" autocomplete="off">
@@ -326,6 +398,7 @@ function bind(){
   q('[data-e]',b=>b.onclick=()=>sheet('edit',find(b.dataset.e)));
   q('[data-d]',b=>b.onclick=()=>{sel=b.dataset.d;render()});
   q('[data-v]',b=>b.onclick=()=>{cv=b.dataset.v;render()});
+  q('[data-f]',b=>b.onclick=()=>{flt=b.dataset.f;render()});
   q('[data-n]',b=>b.onclick=()=>{sel=b.dataset.n;sheet('new')});
   q('[data-w]',b=>b.onclick=()=>{sel=iso(addDays(D(sel),+b.dataset.w));render()});
   if(tab==='set'){
@@ -347,20 +420,21 @@ function bind(){
       const {error}=await sb.auth.updateUser({password:p1});
       btn.disabled=false;
       if(error)return bad('Das hat nicht geklappt: '+error.message);
-      ['pw0','pw1','pw2'].forEach(i=>$(i).value='');
       pwOpen=false;render();toast('Passwort geändert');
     };
     $('logout').onclick=async()=>{await sb.auth.signOut();U=null;PROFILE=null;TASKS=[];USERS=null;ANN=[];tab='home';render()};
   }
   if(tab==='admin'){
-    $('nsend').onclick=async e=>{
+    if($('nopen'))$('nopen').onclick=()=>{annOpen=true;render();$('nt').focus()};
+    if($('nx'))$('nx').onclick=()=>{annOpen=false;render()};
+    if($('nsend'))$('nsend').onclick=async e=>{
       const t=$('nt').value.trim(),b=$('nb').value.trim();
       if(!t||!b)return toast('Bitte Titel und Text ausfüllen.');
       if(!confirm('Update «'+t+'» jetzt an alle Benutzer veröffentlichen?'))return;
       const btn=e.currentTarget;btn.disabled=true;
       const {data,error}=await sb.from('announcements').insert({title:t,body:b}).select().single();
       if(error){btn.disabled=false;return toast('Veröffentlichen fehlgeschlagen: '+error.message)}
-      await markRead(data.id);ANN.unshift(data);toast('Update veröffentlicht');render();
+      await markRead(data.id);ANN.unshift(data);annOpen=false;toast('Update veröffentlicht');render();
     };
     q('[data-na]',b=>b.onclick=async()=>{
       if(!confirm('Dieses Update löschen?'))return;
@@ -384,8 +458,8 @@ function bind(){
     });
   }
 }
-$('nav').onclick=e=>{const b=e.target.closest('[data-t]');if(b){tab=b.dataset.t;if(tab==='admin')USERS=null;render()}};
-$('gear').onclick=()=>{pwOpen=false;if(tab==='set')tab=prev;else{prev=tab;tab='set'}render()};
+$('nav').onclick=e=>{const b=e.target.closest('[data-t]');if(b){tab=b.dataset.t;annOpen=false;if(tab==='admin')USERS=null;render()}};
+$('gear').onclick=()=>{pwOpen=false;annOpen=false;if(tab==='set')tab=prev;else{prev=tab;tab='set'}render()};
 $('fab').onclick=()=>sheet('new');
 
 /* ---------- Dateien lesen (PDF, Word, Text) ---------- */
@@ -415,8 +489,8 @@ function review(o){
   const order=o.items.map((_,i)=>i).sort((a,b)=>o.items[a].date.localeCompare(o.items[b].date)||a-b);
   let last='',list='';
   order.forEach(i=>{const t=o.items[i];
-    if(t.date!==last){last=t.date;list+=`<div class="rd">${fmt(t.date,{weekday:'long',day:'numeric',month:'long'})}</div>`}
-    list+=`<label class="ri${o.danger?' dng':''}" style="--c:${esc(t.color)}"><input type="checkbox" data-i="${i}" checked><div><div class="n">${impS(t.imp)}${esc(t.title)}</div>${t.details?`<div class="rdt">${esc(t.details)}</div>`:''}</div></label>`});
+    if(t.date!==last){last=t.date;list+=`<div class="rd">${wdShort(t.date)}, ${dmy(t.date)}</div>`}
+    list+=`<label class="ri${o.danger?' dng':''}" style="--c:${esc(clr(t))}"><input type="checkbox" data-i="${i}" checked><div><div class="n">${kindChip(t)}${esc(t.title)}</div>${t.details?`<div class="rdt">${esc(t.details)}</div>`:''}</div></label>`});
   bg.innerHTML=`<div class="sheet rv"><div class="row" style="justify-content:space-between;margin-bottom:4px"><h3>${esc(o.title)}</h3><button class="ib sm" id="rx" aria-label="Schliessen">${I('x',18)}</button></div>
     <div class="mut" style="margin-bottom:8px">${esc(o.sub)}</div>
     <div style="margin-bottom:4px"><button id="rall" style="padding:6px 12px;font-size:13px"></button></div>
@@ -441,58 +515,124 @@ function review(o){
   document.body.appendChild(bg);sync();
 }
 
-/* ---------- Blatt: neue / bestehende Aufgabe ---------- */
+/* ---------- Formular: Aufgabe anlegen / bearbeiten ---------- */
+function fromGroup(grp,t){
+  const d=grp.find(isDue),pl=grp.filter(x=>!isDue(x)).sort((a,b)=>a.date.localeCompare(b.date));
+  return {title:t.title,details:t.details||'',urgent:!!t.urgent,
+    due:d?{on:true,from:d.date,to:d.date_to||'',type:d.ttype||'',color:d.color}:{on:false,from:t.date,to:'',type:'',color:PAL[0]},
+    plan:pl.length?{on:true,days:pl.map(x=>x.date),type:pl[0].ttype||'',color:pl[0].color}:{on:false,days:[t.date],type:'',color:PAL[1]}};
+}
+async function saveForm(f,grp,days){
+  const gid=(grp[0]&&grp[0].group_id)||uuid();
+  const base={title:f.title.trim(),details:f.details.trim(),urgent:f.urgent,group_id:gid};
+  const dueRow=grp.find(isDue),planRows=grp.filter(x=>!isDue(x));
+  const ins=[],upd=[],del=[];
+  if(f.due.on){
+    const to=f.due.to&&f.due.to>f.due.from?f.due.to:null;
+    const row={...base,kind:'due',ttype:f.due.type,color:f.due.color,date:f.due.from,date_to:to};
+    dueRow?upd.push([dueRow,row]):ins.push({...row,done:false});
+  }else if(dueRow)del.push(dueRow);
+  if(f.plan.on){
+    days.forEach(d=>{
+      const row={...base,kind:'plan',ttype:f.plan.type,color:f.plan.color,date:d,date_to:null};
+      const ex=planRows.find(x=>x.date===d);ex?upd.push([ex,row]):ins.push({...row,done:false});
+    });
+    planRows.forEach(x=>{if(!days.includes(x.date))del.push(x)});
+  }else del.push(...planRows);
+  for(const [x,row] of upd)await updTask(x,row);
+  if(ins.length)await addTasks(ins);
+  if(del.length)await delIds(del.map(x=>x.id));
+  const dates=[...upd.map(u=>u[1]),...ins].map(x=>x.date).sort();
+  if(dates[0])sel=dates[0];
+}
+
 function sheet(mode,t){
-  const edit=mode==='edit';let m=edit?'manual':'ai';
-  const dr=edit?{...t}:{title:'',details:'',date:sel,color:COL[5],imp:0};
-  let files=[],prompt='',dprompt='',st='Du musst keinen Tag angeben. Die KI ordnet alles selbst den Tagen zu.';
+  const edit=mode==='edit';let m='manual';
+  const grp=edit?(t.group_id?TASKS.filter(x=>x.group_id===t.group_id):[t]):[];
+  const f=edit?fromGroup(grp,t):{title:'',details:'',urgent:false,due:{on:false,from:sel,to:'',type:'',color:PAL[0]},plan:{on:true,days:[sel],type:'',color:PAL[1]}};
+  let files=[],prompt='',dprompt='',aiColor=PAL[0];
+  const AIMSG='Du musst keinen Tag angeben. Die KI ordnet alles selbst den Tagen zu.';
+  let st=AIMSG;
   const dst='Du siehst zuerst eine Liste. Gelöscht wird erst nach deiner Bestätigung.';
   const bg=document.createElement('div');bg.className='sheetbg';
   const close=()=>bg.remove();bg.onclick=e=>{if(e.target===bg)close()};
-  const sw=()=>`<label>Farbe</label><div class="sw">${COL.map(c=>`<i data-k="${c}" class="${c===dr.color?'on':''}" style="background:${c}"></i>`).join('')}<input type="color" value="${esc(dr.color)}" id="cx"></div>`;
+  const swt=(a,cur,cx)=>`<div class="sw">${PAL.map(c=>`<i data-${a}="${c}" class="${c.toLowerCase()===String(cur).toLowerCase()?'on':''}" style="background:${c}"></i>`).join('')}<input type="color" id="${cx}" value="${/^#[0-9a-f]{6}$/i.test(cur)?cur:PAL[0]}"></div>`;
+
+  const manualHtml=()=>`<input class="ti" type="text" id="f_t" value="${esc(f.title)}" placeholder="Titel" autocomplete="off">
+    <textarea class="ds" id="f_x" placeholder="Beschreibung der Aufgabe …">${esc(f.details)}</textarea>
+    <div class="fc"><div class="fh"><div><b>Fällig</b><div class="mut">Wann ist die Abgabe oder Prüfung?</div></div><label class="sw2"><input type="checkbox" id="due_on" ${f.due.on?'checked':''}><span></span></label></div>
+    ${f.due.on?`<div class="g2"><div><label>Von</label><input type="date" id="d_from" value="${f.due.from}"></div><div><label>Bis</label><input type="date" id="d_to" value="${f.due.to||f.due.from}"></div></div>
+      <label>Typ</label><div class="chips"><button class="chip ${f.due.type==='exam'?'on':''}" data-dt="exam"><i></i>Prüfung</button><button class="chip ${f.due.type===''?'on':''}" data-dt="">Abgabe</button></div>
+      ${f.due.type===''?`<label>Farbe</label>${swt('dc',f.due.color,'d_cx')}`:''}`:''}</div>
+    <div class="fc"><div class="fh"><div><b>Ich mache es am</b><div class="mut">An welchen Tagen arbeitest du daran?</div></div><label class="sw2"><input type="checkbox" id="plan_on" ${f.plan.on?'checked':''}><span></span></label></div>
+    ${f.plan.on?`${f.plan.days.map((d,i)=>`<div class="dayrow"><span class="dw">${wdShort(d)}</span><input type="date" data-pd="${i}" value="${d}"><button class="sq" data-px="${i}" aria-label="Tag entfernen">${I('x',16)}</button></div>`).join('')}
+      <button class="ic" id="addday" style="margin:10px 0 2px">${I('plus',16)} Tag hinzufügen</button>
+      ${f.due.on&&f.due.type==='exam'?`<label>Typ der Arbeitstage</label><div class="chips"><button class="chip ${f.plan.type==='exam'?'on':''}" data-pt="exam"><i></i>Prüfung</button><button class="chip ${f.plan.type===''?'on':''}" data-pt="">Normal</button></div>`:''}
+      ${f.plan.type===''?`<label>Farbe</label>${swt('pc',f.plan.color,'p_cx')}`:''}`:''}</div>
+    <label class="ck"><input type="checkbox" id="urg" ${f.urgent?'checked':''}><span>Dringlich <span class="mut">(mit Warnzeichen, steht weiter oben)</span></span></label>
+    ${edit?`<button class="ic" id="help" style="width:100%;margin-top:16px">${I('spark',18)} KI-Hilfe zu dieser Aufgabe</button><div class="ai" id="hout" ${t.note?'':'hidden'}>${esc(t.note||'')}</div>
+    <button class="red ic" id="del" style="width:100%;margin-top:16px">${I('trash',18)} Aufgabe löschen</button>`:''}`;
+  const delHtml=()=>`<label style="margin-top:0">Was soll die KI löschen?</label><textarea id="f_q" style="min-height:120px" placeholder="z. B. Lösche alle Mathe-Kapitel-Aufgaben&#10;oder: Lösche alles zwischen dem 10. und 15. November">${esc(dprompt)}</textarea>
+    <div class="row" style="margin-top:14px"><button class="red ic" id="dgo" style="flex:1">${I('trash',18)} Passende Aufgaben suchen</button></div><div class="mut" id="amsg" style="margin-top:8px">${esc(dst)}</div>`;
+  const aiHtml=()=>`<label style="margin-top:0">Was soll die KI machen? Hier kannst du z. B. deinen Monatsplan einfügen.</label><textarea id="f_p" style="min-height:150px" placeholder="z. B. Mein Plan für November: Woche 1 Mathe Kapitel 1–2, Woche 2 Bio Zellbiologie, 20.11. Prüfung Mathe …">${esc(prompt)}</textarea>
+    <label>Dateien anhängen (PDF, Word .docx, .txt, .md, .csv)</label><input type="file" id="f_f" accept=".pdf,.docx,.txt,.md,.csv,.json,text/*" multiple hidden>
+    <button class="p ic" id="pick">${I('clip',18)} Datei hinzufügen</button>
+    ${files.map((x,i)=>`<div class="file"><span style="display:flex;gap:8px;align-items:center;min-width:0">${I('file',18)}<span style="overflow-wrap:anywhere">${esc(x.name)}</span></span><button class="ib sm" data-r="${i}" aria-label="Entfernen">${I('x',16)}</button></div>`).join('')}
+    <label>Farbe (Prüfungen sind immer rot)</label>${swt('ac',aiColor,'a_cx')}
+    <div class="row" style="margin-top:14px"><button class="p ic" id="go" style="flex:1">${I('spark',18)} Aufgaben erstellen</button></div><div class="mut" id="amsg" style="margin-top:8px">${esc(st)}</div>`;
+
   function draw(){
+    if(!(f.due.on&&f.due.type==='exam'))f.plan.type='';
     const old=bg.querySelector('.sheet'),sc=old?old.scrollTop:0;
-    bg.innerHTML=`<div class="sheet"><div class="row" style="justify-content:space-between;margin-bottom:12px"><h3>${edit?'Aufgabe bearbeiten':'Neu hinzufügen'}</h3><button class="ib sm" id="x" aria-label="Schliessen">${I('x',18)}</button></div>
-    ${edit?'':`<div class="seg"><button class="ic ${m==='manual'?'on':''}" data-m="manual">${I('pen',18)} Selbst</button><button class="ic ${m==='ai'?'on':''}" data-m="ai">${I('spark',18)} Mit KI</button><button class="ic ${m==='del'?'on':''}" data-m="del">${I('trash',18)} Löschen</button></div>`}
-    ${m==='manual'?`<label style="margin-top:0">Titel</label><input type="text" id="f_t" value="${esc(dr.title)}" placeholder="z. B. Mathe Kapitel 3 lernen">
-      <label>Details / Auftrag (optional)</label><textarea id="f_x" style="min-height:80px" placeholder="Was genau ist zu tun?">${esc(dr.details)}</textarea>
-      <label>Tag</label><input type="date" id="f_d" value="${dr.date}">
-      ${sw()}
-      <label>Wichtigkeit</label><div class="seg" id="imp">${['Normal','! Wichtig','Prüfung'].map((l,i)=>`<button data-i="${i}" class="${dr.imp===i?'on':''}">${l}</button>`).join('')}</div>
-      <div class="row" style="margin-top:14px"><button class="p" id="ok" style="flex:1">Speichern</button>${edit?`<button class="red ic" id="del" aria-label="Löschen">${I('trash',18)}</button>`:''}</div>
-      ${edit?`<button class="ic" id="help" style="width:100%;margin-top:10px">${I('spark',18)} KI-Hilfe zu dieser Aufgabe</button><div class="ai" id="hout" ${dr.note?'':'hidden'}>${esc(dr.note||'')}</div>`:''}`
-    :m==='del'?`<label style="margin-top:0">Was soll die KI löschen?</label><textarea id="f_q" style="min-height:120px" placeholder="z. B. Lösche alle Mathe-Kapitel-Aufgaben&#10;oder: Lösche alles zwischen dem 10. und 15. November">${esc(dprompt)}</textarea>
-      <div class="row" style="margin-top:14px"><button class="red ic" id="dgo" style="flex:1">${I('trash',18)} Passende Aufgaben suchen</button></div><div class="mut" id="amsg" style="margin-top:8px">${esc(dst)}</div>`
-    :`<label style="margin-top:0">Was soll die KI machen? Hier kannst du z. B. deinen Monatsplan einfügen.</label><textarea id="f_p" style="min-height:150px" placeholder="z. B. Mein Plan für November: Woche 1 Mathe Kapitel 1–2, Woche 2 Bio Zellbiologie, 20.11. Prüfung Mathe …">${esc(prompt)}</textarea>
-      <label>Dateien anhängen (PDF, Word .docx, .txt, .md, .csv)</label><input type="file" id="f_f" accept=".pdf,.docx,.txt,.md,.csv,.json,text/*" multiple hidden>
-      <button class="p ic" id="pick">${I('clip',18)} Datei hinzufügen</button>
-      ${files.map((f,i)=>`<div class="file"><span style="display:flex;gap:8px;align-items:center;min-width:0">${I('file',18)}<span style="overflow-wrap:anywhere">${esc(f.name)}</span></span><button class="ib sm" data-r="${i}" aria-label="Entfernen">${I('x',16)}</button></div>`).join('')}
-      ${sw()}
-      <div class="row" style="margin-top:14px"><button class="p ic" id="go" style="flex:1">${I('spark',18)} Aufgaben erstellen</button></div><div class="mut" id="amsg" style="margin-top:8px">${esc(st)}</div>`}
-    </div>`;
+    bg.innerHTML=`<div class="sheet"><div class="row" style="justify-content:space-between;margin-bottom:14px"><button id="x">Abbrechen</button>${m==='manual'?'<button class="p" id="ok">Speichern</button>':''}</div>
+    ${edit?'':`<div class="seg"><button class="ic ${m==='manual'?'on':''}" data-m="manual">Selbst</button><button class="ic ${m==='ai'?'on':''}" data-m="ai">${I('spark',18)} Mit KI</button><button class="ic ${m==='del'?'on':''}" data-m="del">${I('trash',18)} Löschen</button></div>`}
+    ${m==='manual'?manualHtml():m==='del'?delHtml():aiHtml()}</div>`;
     const sh=bg.querySelector('.sheet');sh.scrollTop=sc;
-    const g=i=>sh.querySelector('#'+i);
-    const grab=()=>{if(g('f_t'))dr.title=g('f_t').value;if(g('f_x'))dr.details=g('f_x').value;if(g('f_d'))dr.date=g('f_d').value||dr.date;if(g('f_p'))prompt=g('f_p').value;if(g('f_q'))dprompt=g('f_q').value};
+    const g=i=>sh.querySelector('#'+i),qa=(s,fn)=>sh.querySelectorAll(s).forEach(fn);
+    const grab=()=>{
+      if(g('f_t'))f.title=g('f_t').value;
+      if(g('f_x'))f.details=g('f_x').value;
+      if(g('due_on')){f.due.on=g('due_on').checked;if(g('d_from')){f.due.from=g('d_from').value||f.due.from;f.due.to=g('d_to').value}}
+      if(g('plan_on')){f.plan.on=g('plan_on').checked;const ds=[...sh.querySelectorAll('[data-pd]')];if(ds.length)f.plan.days=ds.map(i=>i.value)}
+      if(g('urg'))f.urgent=g('urg').checked;
+      if(g('f_p'))prompt=g('f_p').value;
+      if(g('f_q'))dprompt=g('f_q').value;
+    };
     g('x').onclick=close;
-    sh.querySelectorAll('.sw i').forEach(i=>i.onclick=()=>{grab();dr.color=i.dataset.k;draw()});
-    if(g('cx'))g('cx').onchange=e=>{grab();dr.color=e.target.value;draw()};
-    sh.querySelectorAll('[data-m]').forEach(b=>b.onclick=()=>{grab();m=b.dataset.m;draw()});
+    qa('[data-m]',b=>b.onclick=()=>{grab();m=b.dataset.m;draw()});
+    qa('[data-ac]',b=>b.onclick=()=>{grab();aiColor=b.dataset.ac;draw()});
+    if(g('a_cx'))g('a_cx').onchange=e=>{grab();aiColor=e.target.value;draw()};
+
     if(m==='manual'){
-      sh.querySelectorAll('#imp button').forEach(b=>b.onclick=()=>{grab();dr.imp=+b.dataset.i;draw()});
+      ['due_on','plan_on'].forEach(id=>g(id).onchange=()=>{grab();draw()});
+      qa('[data-dt]',b=>b.onclick=()=>{grab();f.due.type=b.dataset.dt;draw()});
+      qa('[data-pt]',b=>b.onclick=()=>{grab();f.plan.type=b.dataset.pt;draw()});
+      qa('[data-dc]',b=>b.onclick=()=>{grab();f.due.color=b.dataset.dc;draw()});
+      qa('[data-pc]',b=>b.onclick=()=>{grab();f.plan.color=b.dataset.pc;draw()});
+      if(g('d_cx'))g('d_cx').onchange=e=>{grab();f.due.color=e.target.value;draw()};
+      if(g('p_cx'))g('p_cx').onchange=e=>{grab();f.plan.color=e.target.value;draw()};
+      qa('[data-pd]',i=>i.onchange=()=>{grab();draw()});
+      qa('[data-px]',b=>b.onclick=()=>{grab();f.plan.days.splice(+b.dataset.px,1);draw()});
+      if(g('addday'))g('addday').onclick=()=>{grab();const last=f.plan.days.filter(Boolean).slice(-1)[0]||sel;f.plan.days.push(iso(addDays(D(last),1)));draw()};
       g('ok').onclick=async e=>{
-        grab();if(!dr.title.trim()){g('f_t').focus();return}
+        grab();
+        if(!f.title.trim()){g('f_t').focus();return toast('Bitte gib einen Titel ein.')}
+        if(!f.due.on&&!f.plan.on)return toast('Aktiviere «Fällig» oder «Ich mache es am».');
+        const days=[...new Set(f.plan.days.filter(Boolean))].sort();
+        if(f.plan.on&&!days.length)return toast('Füge mindestens einen Arbeitstag hinzu.');
+        if(f.due.on&&!f.due.from)return toast('Bitte ein Fälligkeitsdatum wählen.');
         const btn=e.currentTarget;btn.disabled=true;
-        const row={title:dr.title.trim(),details:dr.details.trim(),date:dr.date,color:dr.color,imp:dr.imp};
-        try{
-          if(edit)await updTask(t,row);else{await addTasks([{...row,done:false}]);sel=dr.date}
-          close();render();
-        }catch(err){toast('Speichern fehlgeschlagen: '+err.message);btn.disabled=false}
+        try{await saveForm(f,grp,days);close();render()}
+        catch(err){toast('Speichern fehlgeschlagen: '+(err.message||err));btn.disabled=false}
       };
       if(edit){
-        g('del').onclick=async()=>{try{await delTask(t);close();render()}catch(err){toast('Löschen fehlgeschlagen')}};
+        g('del').onclick=async()=>{
+          if(grp.length>1&&!confirm('Diese Aufgabe mit allen '+grp.length+' Einträgen (Fälligkeit und Arbeitstage) löschen?'))return;
+          try{await delIds(grp.map(x=>x.id));close();render()}catch(err){toast('Löschen fehlgeschlagen')}
+        };
         g('help').onclick=async e=>{
-          const out=g('hout'),btn=e.currentTarget;out.hidden=false;btn.disabled=true;out.textContent='Denke nach …';
-          try{const r=await callFn('ai',{mode:'help',title:t.title,details:t.details});out.textContent=r.text;await updTask(t,{note:r.text})}
+          grab();const out=g('hout'),btn=e.currentTarget;out.hidden=false;btn.disabled=true;out.textContent='Denke nach …';
+          try{const r=await callFn('ai',{mode:'help',title:f.title,details:f.details});out.textContent=r.text;await updTask(t,{note:r.text})}
           catch(err){out.textContent='KI-Anfrage fehlgeschlagen: '+err.message}
           btn.disabled=false};
       }
@@ -514,27 +654,29 @@ function sheet(mode,t){
       const fi=g('f_f');
       g('pick').onclick=()=>fi.click();
       fi.onchange=async e=>{
-        grab();const list=[...e.target.files],am=g('amsg');
-        for(const f of list){
-          if(f.size>15e6){st=f.name+' ist zu gross (max. 15 MB).';continue}
-          am.textContent='Lese '+f.name+' …';
-          try{files.push({name:f.name,text:await readFile(f)});st='Du musst keinen Tag angeben. Die KI ordnet alles selbst den Tagen zu.'}
-          catch(err){const c=err.message;st=c==='doc'?'Altes .doc wird nicht unterstützt. Bitte als .docx speichern.':c==='empty'?f.name+': kein Text gefunden (gescanntes PDF?).':'Datei konnte nicht gelesen werden: '+f.name}
+        grab();const list=[...e.target.files],am=g('amsg');st=AIMSG;
+        for(const x of list){
+          if(x.size>15e6){st=x.name+' ist zu gross (max. 15 MB).';continue}
+          am.textContent='Lese '+x.name+' …';
+          try{files.push({name:x.name,text:await readFile(x)})}
+          catch(err){const c=err.message;st=c==='doc'?'Altes .doc wird nicht unterstützt. Bitte als .docx speichern.':c==='empty'?x.name+': kein Text gefunden (gescanntes PDF?).':'Datei konnte nicht gelesen werden: '+x.name}
         }
         draw()};
-      sh.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{grab();files.splice(+b.dataset.r,1);draw()});
+      qa('[data-r]',b=>b.onclick=()=>{grab();files.splice(+b.dataset.r,1);draw()});
       g('go').onclick=async e=>{
         grab();const am=g('amsg'),btn=e.currentTarget;
         if(!prompt.trim()&&!files.length){am.textContent='Bitte Text eingeben oder eine Datei anhängen.';return}
         btn.disabled=true;am.textContent='KI arbeitet … bei einem ganzen Monatsplan kann das eine Minute dauern.';
         try{
-          const material=files.map(f=>`### ${f.name}\n${f.text}`).join('\n\n');
+          const material=files.map(x=>`### ${x.name}\n${x.text}`).join('\n\n');
           const r=await callFn('ai',{mode:'plan',prompt,material,today:TODAY});
-          const rows=r.tasks.map(x=>({title:x.title,details:x.details||'',date:x.date,color:dr.color,imp:x.importance||0}));
+          // importance 2 = Prüfung (fällig), 1 = Abgabe/Frist (fällig), 0 = normale Aufgabe (Plan)
+          const rows=r.tasks.map(x=>{const im=x.importance||0;
+            return {title:x.title,details:x.details||'',date:x.date,date_to:null,kind:im>=1?'due':'plan',ttype:im===2?'exam':'',urgent:false,color:aiColor}});
           btn.disabled=false;am.textContent='Prüfe die Liste und tippe auf «Übernehmen».';
           review({title:'Neue Aufgaben prüfen',sub:rows.length+' Aufgaben vorgeschlagen. Noch ist nichts gespeichert. Entferne das Häkchen bei allem, was du nicht möchtest.',items:rows,ok:'Übernehmen',
             onOk:async items=>{
-              await addTasks(items.map(x=>({...x,done:false})));
+              await addTasks(items.map(x=>({...x,done:false,group_id:null})));
               const first=items.map(x=>x.date).sort()[0];
               sel=first&&first>=TODAY?first:TODAY;tab='cal';cv='week';
               close();render();toast(nA(items.length)+' übernommen');
@@ -551,7 +693,7 @@ function sheet(mode,t){
   applyTheme();
   if(SUPABASE_URL.includes('DEIN-PROJEKT')){render();return}
   sb=supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-  sb.auth.onAuthStateChange(ev=>{if(ev==='SIGNED_OUT'){U=null;PROFILE=null;TASKS=[];USERS=null;render()}});
+  sb.auth.onAuthStateChange(ev=>{if(ev==='SIGNED_OUT'){U=null;PROFILE=null;TASKS=[];USERS=null;ANN=[];render()}});
   const {data}=await sb.auth.getSession();
   if(data.session){U=data.session.user;try{await loadAll()}catch(e){toast('Laden fehlgeschlagen')}}
   render();

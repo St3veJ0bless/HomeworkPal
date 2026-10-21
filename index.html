@@ -40,7 +40,9 @@ main{flex:1;overflow-y:auto;padding:8px 16px 130px;max-width:640px;width:100%;ma
 .srow input[type=color]{width:38px;height:38px;padding:0;border:0;background:none;border-radius:50%;overflow:hidden;cursor:pointer;outline:1px solid var(--bd);-webkit-appearance:none;appearance:none}
 .srow input[type=color]::-webkit-color-swatch-wrapper{padding:0}
 .srow input[type=color]::-webkit-color-swatch{border:0;border-radius:50%}
-.tdb{padding:8px 14px;font-weight:600;font-size:14px;border-radius:99px}
+.wnav{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:6px;margin-bottom:10px}
+.wnav b{text-align:center;white-space:nowrap;font-size:15px}
+.tdb{padding:6px 10px;font-weight:600;font-size:12.5px;border-radius:99px}
 .tdb.cur{opacity:.5}
 nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;background:var(--ac);padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));z-index:5}
 nav button{flex:1;max-width:160px;border:0;background:none;color:#fff;opacity:.65;padding:6px 0;font-size:12px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:14px}
@@ -214,7 +216,8 @@ const SUBJ=[
   ['Biologie','B','#63c466'],
   ['Chemie','C','#f0a23a'],
   ['Mathe','M','#5b8def'],
-  ['Geographie','G','#a08563'],
+  ['Geographie','GG','#a08563'],
+  ['Geschichte','G','#a65e3a'],
   ['Englisch','E','#ee739f'],
   ['Französisch','F','#a259d9'],
   ['Italienisch','I','#52b5d6'],
@@ -355,7 +358,7 @@ function cal(){
   const mon=monOf(sel),sun=addDays(mon,6);
   const lab=mon.toLocaleDateString('de-CH',{day:'numeric',month:'short'})+' – '+sun.toLocaleDateString('de-CH',{day:'numeric',month:'short'});
   let h=`<div class="seg"><button data-v="day" class="${cv==='day'?'on':''}">Tag</button><button data-v="week" class="${cv==='week'?'on':''}">Woche</button></div>
-  <div class="row" style="justify-content:space-between;margin-bottom:10px"><button class="ib" data-w="-7" aria-label="Zurück">${I('l')}</button><b>${lab}</b><div class="row"><button class="tdb${mon.getTime()===monOf(TODAY).getTime()&&(cv==='week'||sel===TODAY)?' cur':''}" data-today>Heute</button><button class="ib" data-w="7" aria-label="Weiter">${I('r')}</button></div></div>${fltBar()}`;
+  <div class="wnav"><div><button class="ib" data-w="-7" aria-label="Zurück">${I('l')}</button></div><b>${lab}</b><div class="row" style="justify-content:flex-end;gap:6px"><button class="tdb${mon.getTime()===monOf(TODAY).getTime()&&(cv==='week'||sel===TODAY)?' cur':''}" data-today>Heute</button><button class="ib" data-w="7" aria-label="Weiter">${I('r')}</button></div></div>${fltBar()}`;
   const dayList=k=>TASKS.filter(t=>fl(t)&&onDay(t,k)).sort(cmp);
   if(cv==='week'){
     h+='<div class="wgrid">';

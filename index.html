@@ -23,6 +23,7 @@ svg{display:block}
 header{display:flex;justify-content:space-between;align-items:center;padding:12px 16px 6px;max-width:640px;width:100%;margin:0 auto}
 h1{font-size:26px;margin:0}
 main{flex:1;overflow-y:auto;padding:8px 16px 130px;max-width:640px;width:100%;margin:0 auto}
+@media(min-width:1000px){header.wide,main.wide{max-width:1500px}.wgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:12px;align-items:start}.wcol{min-width:0}.wcol .dh{margin-top:4px}.wcol .empty{padding:14px 8px;font-size:14px}}
 nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;background:var(--ac);padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px));z-index:5}
 nav button{flex:1;max-width:160px;border:0;background:none;color:#fff;opacity:.65;padding:6px 0;font-size:12px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:14px}
 nav button.on{opacity:1;background:rgba(255,255,255,.2)}
@@ -187,7 +188,7 @@ const nA=n=>n+(n===1?' Aufgabe':' Aufgaben');
 
 /* ---------- Zustand ---------- */
 let sb=null,U=null,PROFILE=null,TASKS=[],USERS=null,ANN=[];
-let tab='home',prev='home',sel=TODAY,cv='week',pwOpen=false,annOpen=false,flt='all';
+let tab='home',prev='home',sel=TODAY,cv='day',pwOpen=false,annOpen=false,flt='all';
 const LS='lernplaner-set';
 let SET={accent:'#3b5bdb',theme:'auto'};
 try{Object.assign(SET,JSON.parse(localStorage.getItem(LS)||'{}'))}catch(e){}
@@ -307,12 +308,14 @@ function home(){
 function cal(){
   const mon=monOf(sel),sun=addDays(mon,6);
   const lab=mon.toLocaleDateString('de-CH',{day:'numeric',month:'short'})+' – '+sun.toLocaleDateString('de-CH',{day:'numeric',month:'short'});
-  let h=`<div class="seg"><button data-v="week" class="${cv==='week'?'on':''}">Woche</button><button data-v="day" class="${cv==='day'?'on':''}">Tag</button></div>
+  let h=`<div class="seg"><button data-v="day" class="${cv==='day'?'on':''}">Tag</button><button data-v="week" class="${cv==='week'?'on':''}">Woche</button></div>
   <div class="row" style="justify-content:space-between;margin-bottom:10px"><button class="ib" data-w="-7" aria-label="Zurück">${I('l')}</button><b>${lab}</b><button class="ib" data-w="7" aria-label="Weiter">${I('r')}</button></div>${fltBar()}`;
   const dayList=k=>TASKS.filter(t=>fl(t)&&onDay(t,k)).sort(cmp);
   if(cv==='week'){
+    h+='<div class="wgrid">';
     for(let i=0;i<7;i++){const k=iso(addDays(mon,i)),l=dayList(k);
-      h+=dayHead(k,true)+(l.map(box).join('')||'<div class="empty">Nichts geplant</div>')}
+      h+='<div class="wcol">'+dayHead(k,true)+(l.map(box).join('')||'<div class="empty">Nichts geplant</div>')+'</div>'}
+    h+='</div>';
   }else{
     h+='<div class="strip">';
     for(let i=0;i<7;i++){const d=addDays(mon,i),k=iso(d);h+=`<button class="wd${k===sel?' sel':''}${k===TODAY?' today':''}" data-d="${k}">${fmt(k,{weekday:'narrow'})}<b>${d.getDate()}</b></button>`}
@@ -368,6 +371,7 @@ function render(){
   if(admin)TABS.push(['admin','users','Admin']);
   if(tab==='admin'&&!admin)tab='home';
   $('ttl').textContent={home:'Start',cal:'Kalender',tasks:'Aufgaben',admin:'Admin',set:'Einstellungen'}[tab];
+  const wide=tab==='cal'&&cv==='week';$('main').classList.toggle('wide',wide);$('hd').classList.toggle('wide',wide);
   $('main').innerHTML={home,cal,tasks:tasksView,admin:adminView,set:settingsView}[tab]();
   $('nav').innerHTML=TABS.map(t=>`<button class="${tab===t[0]?'on':''}" data-t="${t[0]}">${I(t[1],24)}${t[2]}</button>`).join('');
   $('fab').style.display=(tab==='set'||tab==='admin')?'none':'';

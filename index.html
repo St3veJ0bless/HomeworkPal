@@ -207,7 +207,7 @@ const nA=n=>n+(n===1?' Aufgabe':' Aufgaben');
 /* ---------- Zustand ---------- */
 let sb=null,U=null,PROFILE=null,TASKS=[],USERS=null,ANN=[],SC={},HAS_SUBJ=false;
 // Fächer: [Name, Abkürzung, Standardfarbe]
-const SUBJ=[['Biologie','B','#63c466'],['Chemie','C','#f0a23a'],['Mathe','M','#5b8def'],['Geographie','G','#a08563'],['Englisch','E','#ee739f'],['Französisch','F','#a259d9'],['Italienisch','I','#52b5d6'],['Latein','L','#8e8e93'],['Griechisch','Gr','#6c5ce7'],['Sport','S','#e8643c'],['Angewandte Mathematik','AM','#2fa7a0'],['Spanisch','Sp','#e8b923'],['Physik','P','#34495e'],['Wirtschaft','W','#b07a3c']];
+const SUBJ=[['Biologie','B','#63c466'],['Chemie','C','#f0a23a'],['Mathe','M','#5b8def'],['Geographie','GG','#a08563'],['Geschichte','G','#a18563'],['Englisch','E','#ee739f'],['Französisch','F','#a259d9'],['Italienisch','I','#52b5d6'],['Latein','L','#8e8e93'],['Griechisch','Gr','#6c5ce7'],['Sport','S','#e8643c'],['Angewandte Mathematik','AM','#2fa7a0'],['Spanisch','Sp','#e8b923'],['Physik','P','#34495e'],['Wirtschaft','W','#b07a3c']];
 const sjAbbr=n=>{const x=SUBJ.find(v=>v[0]===n);return x?x[1]:''};
 const sjColor=n=>SC[n]||(SUBJ.find(v=>v[0]===n)||[])[2]||'#5b8def';
 const sjTag=t=>t.subject&&sjAbbr(t.subject)?`<span class="sj">${esc(sjAbbr(t.subject))}:</span> `:'';
